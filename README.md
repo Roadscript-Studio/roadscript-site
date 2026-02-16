@@ -6,11 +6,13 @@ Roadscript is building verifiable digital identity infrastructure.
 https://roadscript.studio
 
 ## 📦 Repository Structure
+```
 ├── index.html        # Main landing page
 ├── assets/           # Images, icons, static assets
 ├── styles/           # CSS files (future use)
 ├── pages/            # Additional HTML pages (future use)
 └── README.md
+```
 
 ## 🚀 Deployment
 This website is deployed using Cloudflare Pages.
