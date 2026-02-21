@@ -28,12 +28,6 @@
             }
             footer {
                 position: absolute;
-                bottom: 20px;
-                font-size: 0.8rem;
-                opacity: 0.5;
-            }
-            footer {
-                position: absolute;
                 bottom: 10px;
                 font-size: 0.8rem;
                 opacity: 0.78;
@@ -43,7 +37,7 @@
             
             .footer-links {
                 flex-wrap: wrap;
-                gap: 0.6rem 0.9rem;
+                gap: 1.5rem 0.9rem;
             }
 
             .footer-links a {
@@ -62,15 +56,42 @@
                 margin-top: 6px;
                 opacity: 0.6;
             }
+            
+            .hero-links {
+                margin-top: 1.6rem;
+                display: flex;
+                justify-content: center;
+                gap: 1.8rem;
+                flex-wrap: wrap;
+                font-size: 0.95rem;
+                opacity: 0.8;
+            }
+            
+            .hero-links a {
+                color: #94a3b8;
+                text-decoration: none;
+                transition: opacity 0.2s ease, color 0.2s ease;
+            }
+            
+            .hero-links a:hover {
+                color: white;
+                opacity: 1;
+            }
         </style>
     </head>
     <body>
         <div>
             <h1>Roadscript</h1>
             <p>
-                Verifiable. Sovereign. Durable.<br />
-                Digital identity infrastructure for the next generation.
+                Secure authorship and provenance for creators.<br />
+                Building verifiable identity systems for digital works.
             </p>
+            <div class="hero-links">
+                <a href="/about.html">About</a>
+                <a href="/roadmap.html">Roadmap</a>
+                <a href="/whitepaper.html">Whitepaper (Draft)</a>
+                <a href="/identity.html">Engine (Fall 2026)</a>
+            </div>
         </div>
         <footer>
             <div class="footer-links">
@@ -123,7 +144,8 @@
             </div>
             <div class="footer-links">
                 © 2026 Roadscript. All rights reserved.
-                <a href="mailto:contact@roadscript.studio">Contact us</a>
+                <a href="mailto:contact@roadscript.studio">Email</a> · 
+                <a href="https://github.com/Roadscript-Studio">GitHub</a>
             </div>
         </footer>
     </body>
