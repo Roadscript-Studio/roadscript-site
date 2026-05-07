@@ -1,0 +1,1484 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Roadscript - Engine Demo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="assets/favicon.svg" />
+        <link rel="apple-touch-icon" href="assets/favicon.svg" />
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                min-height: 100vh;
+                font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+                background:
+                    radial-gradient(circle at 50% 8%, rgba(56, 189, 248, 0.16), transparent 34rem),
+                    radial-gradient(circle at 12% 20%, rgba(59, 130, 246, 0.12), transparent 26rem),
+                    linear-gradient(135deg, #020617 0%, #0f172a 54%, #111827 100%);
+                color: #e2e8f0;
+                text-align: center;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                background-image:
+                    linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+                background-size: 72px 72px;
+                mask-image: radial-gradient(circle at center, black, transparent 72%);
+            }
+
+            main {
+                position: relative;
+                width: min(92vw, 1080px);
+                margin: 0 auto;
+                padding: 8.5rem 2rem 4rem;
+                display: flex;
+                flex-direction: column;
+                gap: 1.6rem;
+            }
+
+            .site-header {
+                position: fixed;
+                top: 22px;
+                left: 50%;
+                z-index: 50;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: min(92vw, 1040px);
+                padding: 0.75rem 0.85rem 0.75rem 1rem;
+                border: 1px solid rgba(148, 163, 184, 0.18);
+                border-radius: 999px;
+                background: rgba(15, 23, 42, 0.62);
+                box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22);
+                backdrop-filter: blur(20px);
+                transform: translateX(-50%);
+            }
+
+            .site-brand {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.65rem;
+                color: #f8fafc;
+                font-size: 0.95rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+                text-decoration: none;
+            }
+
+            .site-brand-mark {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 28px;
+                height: 28px;
+                border-radius: 9px;
+                background: white;
+                box-shadow: 0 8px 26px rgba(0, 0, 0, 0.25);
+            }
+
+            .site-brand-mark img {
+                width: 18px;
+                height: 18px;
+            }
+
+            .site-nav {
+                display: flex;
+                align-items: center;
+                gap: 0.35rem;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .site-nav a {
+                color: #cbd5e1;
+                text-decoration: none;
+                padding: 0.58rem 0.82rem;
+                border: 1px solid transparent;
+                border-radius: 999px;
+                font-size: 0.86rem;
+                transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+            }
+
+            .site-nav a:hover,
+            .site-nav a[aria-current="page"] {
+                color: white;
+                border-color: rgba(56, 189, 248, 0.45);
+                background: rgba(56, 189, 248, 0.1);
+            }
+
+            .page-card,
+            .demo-workbench {
+                position: relative;
+                border: 1px solid rgba(148, 163, 184, 0.18);
+                border-radius: 32px;
+                background: rgba(15, 23, 42, 0.48);
+                box-shadow: 0 28px 90px rgba(0, 0, 0, 0.36);
+                backdrop-filter: blur(22px);
+                text-align: left;
+            }
+
+            .page-card::before,
+            .demo-workbench::before {
+                content: "";
+                position: absolute;
+                inset: 1px;
+                border-radius: 31px;
+                pointer-events: none;
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 38%);
+            }
+
+            .page-card {
+                padding: 2.4rem 2.2rem;
+            }
+
+            .demo-workbench {
+                padding: 2rem;
+            }
+
+            .page-card > *,
+            .demo-workbench > * {
+                position: relative;
+                z-index: 1;
+            }
+
+            .eyebrow {
+                display: inline-flex;
+                align-items: center;
+                padding: 0.38rem 0.72rem;
+                border: 1px solid rgba(56, 189, 248, 0.28);
+                border-radius: 999px;
+                background: rgba(56, 189, 248, 0.08);
+                color: #7dd3fc;
+                font-size: 0.78rem;
+                font-weight: 600;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+            }
+
+            .page-card h1 {
+                margin: 1rem 0 0;
+                font-size: clamp(2.4rem, 5vw, 4rem);
+                line-height: 0.95;
+                letter-spacing: -0.06em;
+                color: #f8fafc;
+            }
+
+            .page-card p {
+                max-width: 760px;
+                margin: 1rem 0 0;
+                font-size: 1.02rem;
+                line-height: 1.7;
+                color: #cbd5e1;
+            }
+
+            .demo-toolbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                flex-wrap: wrap;
+                margin-bottom: 1.5rem;
+            }
+
+            .toolbar-copy h2 {
+                margin: 0;
+                color: #f8fafc;
+                font-size: 1.5rem;
+                letter-spacing: -0.04em;
+            }
+
+            .toolbar-copy p {
+                margin: 0.45rem 0 0;
+                color: #94a3b8;
+                font-size: 0.96rem;
+                line-height: 1.6;
+            }
+
+            .sample-selector {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.65rem;
+            }
+
+            .demo-ops {
+                display: grid;
+                grid-template-columns: minmax(0, 1.08fr) minmax(18rem, 0.92fr);
+                gap: 1rem;
+                margin-bottom: 1.4rem;
+            }
+
+            .demo-status {
+                margin-top: 0.9rem;
+                color: #94a3b8;
+                font-size: 0.9rem;
+                line-height: 1.5;
+                min-height: 1.35rem;
+            }
+
+            .demo-status.is-loading {
+                color: #cbd5e1;
+            }
+
+            .demo-status.is-error {
+                color: #fda4af;
+            }
+
+            .sample-option {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 44px;
+                padding: 0.7rem 1rem;
+                border: 1px solid rgba(148, 163, 184, 0.18);
+                border-radius: 999px;
+                background: rgba(2, 6, 23, 0.35);
+                color: #cbd5e1;
+                font: inherit;
+                font-size: 0.9rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+            }
+
+            .sample-option:hover,
+            .sample-option.is-active {
+                border-color: rgba(56, 189, 248, 0.4);
+                background: rgba(56, 189, 248, 0.12);
+                color: #f8fafc;
+            }
+
+            .sample-option:disabled {
+                cursor: wait;
+                opacity: 0.7;
+            }
+
+            .ops-panel,
+            .image-card,
+            .summary-panel,
+            .metric-card,
+            .metric-chip {
+                border: 1px solid rgba(148, 163, 184, 0.18);
+                border-radius: 22px;
+                background: rgba(2, 6, 23, 0.32);
+                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            }
+
+            .ops-panel {
+                position: relative;
+                padding: 1rem 1.05rem;
+                overflow: hidden;
+            }
+
+            .ops-panel-header {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 1rem;
+                flex-wrap: wrap;
+                margin-bottom: 0.95rem;
+            }
+
+            .ops-panel-title {
+                margin: 0.35rem 0 0;
+                color: #f8fafc;
+                font-size: 1.02rem;
+                font-weight: 600;
+                letter-spacing: -0.02em;
+            }
+
+            .pipeline-panel::after {
+                content: "";
+                position: absolute;
+                inset: -20% auto -20% -35%;
+                width: 40%;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(125, 211, 252, 0.08),
+                    transparent
+                );
+                opacity: 0;
+                transform: translateX(-100%);
+                pointer-events: none;
+            }
+
+            .demo-workbench.is-processing .pipeline-panel::after {
+                opacity: 1;
+                animation: panelSweep 2.1s linear infinite;
+            }
+
+            .pipeline-phase {
+                display: inline-flex;
+                align-items: center;
+                min-height: 34px;
+                padding: 0.42rem 0.72rem;
+                border: 1px solid rgba(148, 163, 184, 0.18);
+                border-radius: 999px;
+                background: rgba(15, 23, 42, 0.72);
+                color: #cbd5e1;
+                font-size: 0.8rem;
+                font-weight: 600;
+                letter-spacing: 0.02em;
+                transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+            }
+
+            .pipeline-phase.is-active {
+                border-color: rgba(56, 189, 248, 0.2);
+                background: rgba(56, 189, 248, 0.08);
+                color: #e2e8f0;
+            }
+
+            .pipeline-phase.is-complete {
+                border-color: rgba(52, 211, 153, 0.18);
+                background: rgba(52, 211, 153, 0.08);
+                color: #a7f3d0;
+            }
+
+            .pipeline-phase.is-error {
+                border-color: rgba(248, 113, 113, 0.18);
+                background: rgba(248, 113, 113, 0.08);
+                color: #fecaca;
+            }
+
+            .pipeline-log {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: grid;
+                gap: 0.75rem;
+            }
+
+            .pipeline-step {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 0.75rem;
+                align-items: center;
+                opacity: 0.58;
+                transform: translateY(0);
+                transition: opacity 0.22s ease, transform 0.22s ease, color 0.22s ease;
+            }
+
+            .pipeline-step.is-active,
+            .pipeline-step.is-complete {
+                opacity: 1;
+            }
+
+            .pipeline-step.is-active {
+                transform: translateY(-1px);
+            }
+
+            .pipeline-step-marker {
+                position: relative;
+                width: 1rem;
+                height: 1rem;
+                border-radius: 999px;
+                border: 1px solid rgba(148, 163, 184, 0.22);
+                background: rgba(15, 23, 42, 0.72);
+                transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+            }
+
+            .pipeline-step.is-active .pipeline-step-marker {
+                border-color: rgba(56, 189, 248, 0.35);
+                background: rgba(56, 189, 248, 0.14);
+                box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.18);
+                animation: pipelinePulse 1.45s ease-in-out infinite;
+            }
+
+            .pipeline-step.is-complete .pipeline-step-marker {
+                border-color: rgba(52, 211, 153, 0.24);
+                background: rgba(52, 211, 153, 0.14);
+            }
+
+            .pipeline-step.is-complete .pipeline-step-marker::after {
+                content: "";
+                position: absolute;
+                left: 0.31rem;
+                top: 0.16rem;
+                width: 0.22rem;
+                height: 0.42rem;
+                border-right: 1.5px solid #a7f3d0;
+                border-bottom: 1.5px solid #a7f3d0;
+                transform: rotate(45deg);
+            }
+
+            .pipeline-step-label {
+                color: #94a3b8;
+                font-size: 0.92rem;
+                line-height: 1.45;
+            }
+
+            .pipeline-step.is-active .pipeline-step-label {
+                color: #e2e8f0;
+            }
+
+            .pipeline-step.is-complete .pipeline-step-label {
+                color: #cbd5e1;
+            }
+
+            .upload-zone {
+                display: grid;
+                gap: 0.55rem;
+                min-height: 100%;
+                padding: 1rem;
+                border: 1px dashed rgba(125, 211, 252, 0.16);
+                border-radius: 18px;
+                background: rgba(15, 23, 42, 0.44);
+            }
+
+            .upload-zone-title {
+                margin: 0;
+                color: #f8fafc;
+                font-size: 1rem;
+                font-weight: 600;
+                letter-spacing: -0.02em;
+            }
+
+            .upload-zone-copy {
+                margin: 0;
+                color: #94a3b8;
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
+
+            .upload-zone-meta {
+                width: fit-content;
+                margin-top: 0.1rem;
+                padding: 0.34rem 0.62rem;
+                border-radius: 999px;
+                border: 1px solid rgba(148, 163, 184, 0.14);
+                background: rgba(15, 23, 42, 0.74);
+                color: #cbd5e1;
+                font-size: 0.72rem;
+                font-weight: 600;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+            }
+
+            .demo-stage {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+
+            .demo-images {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1rem;
+                align-items: start;
+            }
+
+            .image-card {
+                padding: 0.95rem;
+            }
+
+            .image-frame {
+                position: relative;
+                width: 100%;
+                aspect-ratio: 4 / 3;
+                margin-top: 0.85rem;
+                border-radius: 18px;
+                border: 1px solid rgba(148, 163, 184, 0.18);
+                background: rgba(15, 23, 42, 0.88);
+                overflow: hidden;
+            }
+
+            .image-card img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: opacity 0.2s ease, visibility 0.2s ease;
+            }
+
+            .image-frame.is-fallback img {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            .image-fallback {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 1.2rem;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.2s ease;
+            }
+
+            .image-frame.is-fallback .image-fallback {
+                opacity: 1;
+            }
+
+            .image-fallback-panel {
+                width: 100%;
+                max-width: 14rem;
+                padding: 1.2rem 1rem;
+                border: 1px solid rgba(148, 163, 184, 0.16);
+                border-radius: 16px;
+                background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(2, 6, 23, 0.88));
+                box-shadow:
+                    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+                    0 14px 30px rgba(0, 0, 0, 0.22);
+                text-align: center;
+            }
+
+            .image-fallback-title {
+                display: block;
+                color: #e2e8f0;
+                font-size: 0.95rem;
+                font-weight: 600;
+                letter-spacing: -0.01em;
+            }
+
+            .image-fallback-subtext {
+                display: block;
+                margin-top: 0.35rem;
+                color: #94a3b8;
+                font-size: 0.82rem;
+                line-height: 1.5;
+            }
+
+            .summary-stack {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1rem;
+            }
+
+            .summary-panel {
+                padding: 1.15rem;
+            }
+
+            .verification-panel {
+                border-color: rgba(52, 211, 153, 0.14);
+                background:
+                    linear-gradient(180deg, rgba(16, 185, 129, 0.06), rgba(2, 6, 23, 0.04)),
+                    rgba(2, 6, 23, 0.32);
+                box-shadow:
+                    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+                    0 0 0 1px rgba(52, 211, 153, 0.025);
+            }
+
+            .kicker,
+            .metric-label,
+            .profile-label,
+            .image-label {
+                display: block;
+                color: #94a3b8;
+                font-size: 0.78rem;
+                font-weight: 600;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+            }
+
+            .verification-row {
+                display: grid;
+                gap: 0.85rem;
+            }
+
+            .verification-status {
+                display: flex;
+                align-items: center;
+                gap: 0.9rem;
+                flex-wrap: wrap;
+            }
+
+            .verification-dot {
+                width: 0.6rem;
+                height: 0.6rem;
+                border-radius: 999px;
+                background: #34d399;
+                box-shadow: 0 0 0 0.24rem rgba(52, 211, 153, 0.12);
+                flex: 0 0 auto;
+            }
+
+            .verification-value {
+                display: block;
+                font-size: clamp(1.72rem, 2.5vw, 2.05rem);
+                line-height: 0.92;
+                letter-spacing: -0.035em;
+                font-weight: 700;
+                color: #f8fafc;
+            }
+
+            .verification-badge {
+                display: inline-flex;
+                align-items: center;
+                width: fit-content;
+                padding: 0.34rem 0.62rem;
+                border-radius: 999px;
+                border: 1px solid rgba(52, 211, 153, 0.18);
+                background: rgba(52, 211, 153, 0.08);
+                color: #a7f3d0;
+                font-size: 0.69rem;
+                font-weight: 600;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+            }
+
+            .verification-support {
+                display: block;
+                color: #94a3b8;
+                font-size: 0.82rem;
+                line-height: 1.5;
+            }
+
+            .payload-box {
+                margin-top: 1rem;
+                padding: 0.85rem 0.95rem;
+                border: 1px solid rgba(148, 163, 184, 0.12);
+                border-radius: 18px;
+                background: rgba(15, 23, 42, 0.58);
+            }
+
+            .payload-value {
+                display: block;
+                margin-top: 0.45rem;
+                color: #f8fafc;
+                font-size: 1.2rem;
+                font-weight: 600;
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            }
+
+            .profile-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.8rem 1rem;
+                margin-top: 1rem;
+            }
+
+            .profile-value {
+                display: block;
+                margin-top: 0.35rem;
+                color: #f8fafc;
+                font-size: 0.95rem;
+                line-height: 1.45;
+            }
+
+            .metrics {
+                display: grid;
+                gap: 1rem;
+                margin-top: 1.2rem;
+            }
+
+            .metrics-primary,
+            .metrics-secondary {
+                display: grid;
+                gap: 1rem;
+            }
+
+            .metrics-primary {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+
+            .metrics-secondary {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+
+            .metric-card,
+            .metric-chip {
+                padding: 1rem;
+            }
+
+            .metric-value {
+                display: block;
+                margin-top: 0.45rem;
+                color: #f8fafc;
+                letter-spacing: -0.04em;
+            }
+
+            .metric-card .metric-value {
+                font-size: 1.45rem;
+                font-weight: 700;
+            }
+
+            .metric-chip .metric-value {
+                font-size: 1.02rem;
+                font-weight: 600;
+            }
+
+            .metric-note {
+                display: block;
+                margin-top: 0.28rem;
+                color: #94a3b8;
+                font-size: 0.84rem;
+            }
+
+            footer {
+                font-size: 0.78rem;
+                color: #94a3b8;
+                width: min(92vw, 1040px);
+                text-align: center;
+                margin: 0 auto;
+                padding: 0 1rem 1.5rem;
+            }
+
+            .footer-links {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 0.35rem 0.65rem;
+            }
+
+            .footer-links a {
+                color: #cbd5e1;
+                text-decoration: none;
+                opacity: 0.76;
+                white-space: nowrap;
+                transition: opacity 0.2s ease, color 0.2s ease;
+            }
+
+            .footer-links a:hover {
+                opacity: 1;
+                text-decoration: underline;
+            }
+
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                inset: 0;
+                background: rgba(15, 23, 42, 0.72);
+                backdrop-filter: blur(8px);
+                align-items: center;
+                justify-content: center;
+                padding: 1.5rem;
+            }
+
+            .modal.is-open {
+                display: flex;
+            }
+
+            .modal-content {
+                position: relative;
+                max-width: 560px;
+                width: 100%;
+                padding: 2rem;
+                border: 1px solid rgba(148, 163, 184, 0.28);
+                border-radius: 18px;
+                background: rgba(15, 23, 42, 0.96);
+                box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+                text-align: left;
+            }
+
+            .modal-content h2 {
+                margin: 0 0 0.35rem;
+                font-size: 1.6rem;
+            }
+
+            .modal-subtitle {
+                margin: 0 0 1.2rem;
+                color: #94a3b8;
+                font-size: 0.95rem;
+            }
+
+            .modal-content p {
+                margin: 0;
+                font-size: 1rem;
+                line-height: 1.7;
+                opacity: 0.88;
+            }
+
+            .modal-close {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                border: none;
+                background: transparent;
+                color: #94a3b8;
+                font-size: 1.5rem;
+                line-height: 1;
+                cursor: pointer;
+            }
+
+            .modal-close:hover {
+                color: white;
+            }
+
+            @keyframes pipelinePulse {
+                0%,
+                100% {
+                    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.14);
+                }
+                50% {
+                    box-shadow: 0 0 0 0.28rem rgba(56, 189, 248, 0.05);
+                }
+            }
+
+            @keyframes panelSweep {
+                from {
+                    transform: translateX(-120%);
+                }
+                to {
+                    transform: translateX(320%);
+                }
+            }
+
+            @media (max-width: 900px) {
+                .demo-ops,
+                .metrics-primary,
+                .metrics-secondary {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+            }
+
+            @media (max-width: 640px) {
+                .modal-content {
+                    padding: 1.5rem;
+                }
+
+                main {
+                    width: 100%;
+                    padding: 6.5rem 1rem 3rem;
+                }
+
+                .site-header {
+                    top: 12px;
+                    width: calc(100% - 24px);
+                    align-items: flex-start;
+                    border-radius: 24px;
+                    padding: 0.85rem;
+                    gap: 0.75rem;
+                }
+
+                .site-nav {
+                    gap: 0.25rem;
+                }
+
+                .site-nav a {
+                    padding: 0.48rem 0.62rem;
+                    font-size: 0.78rem;
+                }
+
+                .page-card,
+                .demo-workbench {
+                    border-radius: 24px;
+                    padding: 1.35rem 1rem;
+                }
+
+                .demo-ops,
+                .demo-images,
+                .summary-stack,
+                .metrics-primary,
+                .metrics-secondary,
+                .profile-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .demo-toolbar {
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+
+                .sample-selector {
+                    width: 100%;
+                }
+
+                .sample-option {
+                    flex: 1 1 100%;
+                }
+
+                .ops-panel,
+                .image-card,
+                .summary-panel,
+                .metric-card,
+                .metric-chip {
+                    border-radius: 18px;
+                }
+
+                .verification-row {
+                    align-items: flex-start;
+                }
+
+                .ops-panel-header {
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header class="site-header" aria-label="Primary navigation">
+            <a class="site-brand" href="/" aria-label="Roadscript home">
+                <span class="site-brand-mark">
+                    <img src="assets/favicon.svg" alt="" aria-hidden="true" />
+                </span>
+                Roadscript
+            </a>
+            <nav class="site-nav">
+                <a href="#about" id="aboutLink">About</a>
+                <a href="/roadmap.html">Roadmap</a>
+                <a href="/whitepaper.html">Whitepaper</a>
+                <a href="demo.html" aria-current="page">Engine</a>
+            </nav>
+        </header>
+        <main>
+            <section class="page-card" aria-labelledby="demoPageTitle">
+                <span class="eyebrow">Engine Demo</span>
+                <h1 id="demoPageTitle">Invisible watermarking, verified through curated samples.</h1>
+                <p>
+                    This static demo page is structured as a future-ready workbench: a lightweight selector drives
+                    centralized sample data, and the rendered metrics can later be replaced with backend responses,
+                    async processing states, and upload-based workflows without redesigning the page.
+                </p>
+            </section>
+
+            <section class="demo-workbench" aria-labelledby="sampleSelectorTitle">
+                <div class="demo-toolbar">
+                    <div class="toolbar-copy">
+                        <h2 id="sampleSelectorTitle">Choose a sample run</h2>
+                        <p>Select a preset image to inspect the original, watermarked output, decoded payload, and run metrics.</p>
+                        <div id="demoStatus" class="demo-status" role="status" aria-live="polite"></div>
+                    </div>
+                    <div id="sampleSelector" class="sample-selector" aria-label="Demo sample selector"></div>
+                </div>
+
+                <div class="demo-ops">
+                    <article class="ops-panel pipeline-panel" aria-labelledby="pipelineStatusTitle">
+                        <div class="ops-panel-header">
+                            <div>
+                                <span class="kicker">Pipeline status</span>
+                                <h3 id="pipelineStatusTitle" class="ops-panel-title">Verification workflow</h3>
+                            </div>
+                            <span id="pipelinePhase" class="pipeline-phase">Idle</span>
+                        </div>
+                        <ul id="pipelineLog" class="pipeline-log" aria-live="polite"></ul>
+                    </article>
+
+                    <article class="ops-panel upload-panel" aria-labelledby="uploadZoneTitle">
+                        <div class="ops-panel-header">
+                            <div>
+                                <span class="kicker">Custom upload</span>
+                                <h3 id="uploadZoneTitle" class="ops-panel-title">Coming soon</h3>
+                            </div>
+                        </div>
+                        <div class="upload-zone" aria-disabled="true">
+                            <p class="upload-zone-copy">
+                                Preset samples drive this phase. Upload handling and real engine execution will
+                                connect here next.
+                            </p>
+                            <span class="upload-zone-meta">Disabled in mock workflow</span>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="demo-stage">
+                    <div class="demo-images" aria-label="Watermarking comparison">
+                        <article class="image-card">
+                            <span class="image-label">Original image</span>
+                            <div class="image-frame" data-image-frame>
+                                <img
+                                    id="originalImage"
+                                    src="assets/demo/portrait-original.png"
+                                    alt="Original demo sample"
+                                />
+                                <div class="image-fallback" aria-hidden="true">
+                                    <div class="image-fallback-panel">
+                                        <span class="image-fallback-title">Image Unavailable</span>
+                                        <span class="image-fallback-subtext">Asset not added yet</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="image-card">
+                            <span class="image-label">Watermarked image</span>
+                            <div class="image-frame" data-image-frame>
+                                <img
+                                    id="watermarkedImage"
+                                    src="assets/demo/portrait-watermarked.png"
+                                    alt="Watermarked demo sample"
+                                />
+                                <div class="image-fallback" aria-hidden="true">
+                                    <div class="image-fallback-panel">
+                                        <span class="image-fallback-title">Image Unavailable</span>
+                                        <span class="image-fallback-subtext">Asset not added yet</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="summary-stack">
+                        <div class="summary-panel verification-panel">
+                            <div class="verification-row">
+                                <span class="kicker">Verification</span>
+                                <div class="verification-status">
+                                    <span class="verification-dot" aria-hidden="true"></span>
+                                    <span class="verification-value" data-field="verification">PASS</span>
+                                    <span class="verification-badge">Verified</span>
+                                </div>
+                                <span class="verification-support">Payload decoded successfully</span>
+                            </div>
+                            <div class="payload-box">
+                                <span class="kicker">Decoded payload</span>
+                                <span class="payload-value" data-field="decodedPayload">hello</span>
+                            </div>
+                        </div>
+
+                        <div class="summary-panel">
+                            <span class="kicker">Engine profile</span>
+                            <div class="profile-grid">
+                                <div>
+                                    <span class="profile-label">Layout</span>
+                                    <span class="profile-value" data-field="layout">center-ring</span>
+                                </div>
+                                <div>
+                                    <span class="profile-label">Step</span>
+                                    <span class="profile-value" data-field="step">30</span>
+                                </div>
+                                <div>
+                                    <span class="profile-label">Key mode</span>
+                                    <span class="profile-value" data-field="keyMode">none</span>
+                                </div>
+                                <div>
+                                    <span class="profile-label">PRNG</span>
+                                    <span class="profile-value" data-field="prng">Roadscript PRNG v1</span>
+                                </div>
+                                <div>
+                                    <span class="profile-label">Haar</span>
+                                    <span class="profile-value" data-field="haar">Roadscript Haar v1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metrics" aria-label="Watermarking demo metrics">
+                    <div class="metrics-primary">
+                        <article class="metric-card">
+                            <span class="metric-label">Visual quality</span>
+                            <span class="metric-value" data-field="snr">64.48 dB</span>
+                            <span class="metric-note">SNR</span>
+                        </article>
+                        <article class="metric-card">
+                            <span class="metric-label">Capacity used</span>
+                            <span class="metric-value" data-field="utilization">0.41%</span>
+                            <span class="metric-note">Utilization</span>
+                        </article>
+                        <article class="metric-card">
+                            <span class="metric-label">Embed time</span>
+                            <span class="metric-value" data-field="embedTime">181.99 ms</span>
+                            <span class="metric-note">Single embed run</span>
+                        </article>
+                        <article class="metric-card">
+                            <span class="metric-label">Extract + verify</span>
+                            <span class="metric-value" data-field="extractVerify">213.72 ms</span>
+                            <span class="metric-note">Decode and verification</span>
+                        </article>
+                    </div>
+
+                    <div class="metrics-secondary">
+                        <article class="metric-chip">
+                            <span class="metric-label">Capacity</span>
+                            <span class="metric-value" data-field="capacity">23625 bits</span>
+                        </article>
+                        <article class="metric-chip">
+                            <span class="metric-label">Message size</span>
+                            <span class="metric-value" data-field="messageSize">5 bytes</span>
+                        </article>
+                        <article class="metric-chip">
+                            <span class="metric-label">Required bits</span>
+                            <span class="metric-value" data-field="requiredBits">96</span>
+                        </article>
+                        <article class="metric-chip">
+                            <span class="metric-label">Fits</span>
+                            <span class="metric-value" data-field="fits">yes</span>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div id="aboutModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="aboutTitle">
+            <div class="modal-content">
+                <button class="modal-close" id="aboutClose" type="button" aria-label="Close About dialog">&times;</button>
+                <h2 id="aboutTitle">About Roadscript</h2>
+                <p class="modal-subtitle">Engineering systems for authenticity and trust.</p>
+                <p>
+                    Roadscript is an independent engineering initiative focused on building robust and verifiable
+                    systems for digital media. At its core is Cyphra, an invisible watermarking engine based on
+                    transform-domain techniques (DWT, DCT, and QIM) designed to ensure image authenticity while
+                    preserving visual quality. Alongside this, Roadscript explores confusion-aware learning through
+                    Confusion Memory, a research direction that models how systems learn from ambiguity, as well as
+                    low-level system design through MiniCore and MiniOS. From capture to verification and
+                    interpretation, Roadscript reflects a single goal: to design systems that are reliable,
+                    transparent, and grounded in real-world use.
+                </p>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-links">
+                <a
+                    href="https://youtube.com/@roadscript0923?si=9QFidjcyGVrqMrV9"
+                    target="_blank"
+                    rel="noopener"
+                    >YouTube</a
+                >
+                ·
+                <a
+                    href="https://www.tiktok.com/@_roadscript?_r=1&_t=ZS-9412rQs6c9V"
+                    target="_blank"
+                    rel="noopener"
+                    >TikTok</a
+                >
+                ·
+                <a
+                    href="https://xhslink.com/m/9elnBCeCVnW"
+                    target="_blank"
+                    rel="noopener"
+                    >rednote</a
+                >
+                ·
+                <a
+                    href="https://b23.tv/IkRxi2q" target="_blank" rel="noopener"
+                    >BiliBili</a
+                >
+                ·
+                <a
+                    href="https://v.douyin.com/645u6oXgdLg/"
+                    target="_blank"
+                    rel="noopener"
+                    >Douyin</a
+                >
+                ·
+                <a
+                    href="https://www.instagram.com/_roadscript?igsh=MWs4dGZzd2w1MXV1Nw%3D%3D&utm_source=qr"
+                    target="_blank"
+                    rel="noopener"
+                    >Instagram</a
+                >
+                ·
+                <a
+                    href="https://pin.it/38tTEXJWl"
+                    target="_blank"
+                    rel="noopener"
+                    >Pinterest</a
+                >
+            </div>
+            <div class="footer-links">
+                © 2026 Roadscript. All rights reserved.
+                <a href="mailto:contact@roadscript.studio">Email</a> ·
+                <a href="https://github.com/Roadscript-Studio">GitHub</a>
+            </div>
+        </footer>
+
+        <script>
+            const API_BASE_URL = window.DEMO_API_BASE || "http://127.0.0.1:8000";
+            const workflowPhases = [
+                { id: "prepare", label: "Preparing sample", logStepId: "sample", delayMs: 240 },
+                { id: "embed", label: "Embedding watermark", logStepId: "embed", delayMs: 320 },
+                { id: "verify", label: "Running verification", logStepId: "verify", delayMs: 340 },
+                { id: "decode", label: "Decoding payload", logStepId: "decode", delayMs: 240 },
+                { id: "complete", label: "Verification complete", logStepId: null, delayMs: 120 },
+            ];
+            const pipelineSteps = [
+                { id: "sample", label: "Sample loaded" },
+                { id: "embed", label: "Watermark embedded" },
+                { id: "verify", label: "Verification passed" },
+                { id: "decode", label: "Payload decoded" },
+            ];
+            const demoSamples = [
+                {
+                    id: "portrait",
+                    label: "Portrait",
+                },
+                {
+                    id: "architecture",
+                    label: "Architecture",
+                },
+                {
+                    id: "landscape",
+                    label: "Landscape",
+                },
+            ];
+
+            const fieldTargets = Array.from(document.querySelectorAll("[data-field]")).reduce((acc, node) => {
+                const key = node.dataset.field;
+                acc[key] = acc[key] || [];
+                acc[key].push(node);
+                return acc;
+            }, {});
+
+            const originalImage = document.getElementById("originalImage");
+            const watermarkedImage = document.getElementById("watermarkedImage");
+            const sampleSelector = document.getElementById("sampleSelector");
+            const demoStatus = document.getElementById("demoStatus");
+            const demoWorkbench = document.querySelector(".demo-workbench");
+            const pipelinePhase = document.getElementById("pipelinePhase");
+            const pipelineLog = document.getElementById("pipelineLog");
+            let activeSampleId = null;
+            let isLoading = false;
+
+            function wait(ms) {
+                return new Promise((resolve) => {
+                    window.setTimeout(resolve, ms);
+                });
+            }
+
+            function setImageFallbackState(image, showFallback) {
+                const frame = image.closest("[data-image-frame]");
+                if (!frame) {
+                    return;
+                }
+
+                frame.classList.toggle("is-fallback", showFallback);
+            }
+
+            function bindImageFallback(image) {
+                image.addEventListener("load", () => {
+                    setImageFallbackState(image, false);
+                });
+
+                image.addEventListener("error", () => {
+                    setImageFallbackState(image, true);
+                });
+
+                if (image.complete) {
+                    setImageFallbackState(image, image.naturalWidth === 0);
+                }
+            }
+
+            function initializePipelineLog() {
+                pipelineSteps.forEach((step) => {
+                    const item = document.createElement("li");
+                    item.className = "pipeline-step";
+                    item.dataset.stepId = step.id;
+                    item.innerHTML = `
+                        <span class="pipeline-step-marker" aria-hidden="true"></span>
+                        <span class="pipeline-step-label">${step.label}</span>
+                    `;
+                    pipelineLog.appendChild(item);
+                });
+            }
+
+            function renderPipelineLog({ activeStepId = null, completedStepIds = new Set() } = {}) {
+                const items = pipelineLog.querySelectorAll("[data-step-id]");
+                items.forEach((item) => {
+                    const stepId = item.dataset.stepId;
+                    const isComplete = completedStepIds.has(stepId);
+                    const isActive = !isComplete && stepId === activeStepId;
+
+                    item.classList.toggle("is-complete", isComplete);
+                    item.classList.toggle("is-active", isActive);
+                });
+            }
+
+            function setPipelinePhase(label, state = "") {
+                pipelinePhase.textContent = label;
+                pipelinePhase.className = "pipeline-phase";
+                if (state) {
+                    pipelinePhase.classList.add(state);
+                }
+            }
+
+            async function runWorkflowPhase(phase, completedStepIds) {
+                renderPipelineLog({
+                    activeStepId: phase.logStepId,
+                    completedStepIds,
+                });
+                setPipelinePhase(phase.label, "is-active");
+                setStatus(phase.label, "is-loading");
+                await wait(phase.delayMs);
+
+                if (phase.logStepId) {
+                    completedStepIds.add(phase.logStepId);
+                }
+            }
+
+            function flattenDemoResult(result) {
+                return {
+                    verification: result.verification,
+                    decodedPayload: result.decoded_payload,
+                    snr: result.metrics.snr,
+                    utilization: result.metrics.utilization,
+                    embedTime: result.metrics.embed_time,
+                    extractVerify: result.metrics.verify_time,
+                    capacity: result.metrics.capacity,
+                    messageSize: result.metrics.message_size,
+                    requiredBits: result.metrics.required_bits,
+                    fits: result.metrics.fits,
+                    layout: result.profile.layout,
+                    step: result.profile.step,
+                    keyMode: result.profile.key_mode,
+                    prng: result.profile.prng,
+                    haar: result.profile.haar,
+                };
+            }
+
+            function setFieldValue(field, value) {
+                const targets = fieldTargets[field] || [];
+                targets.forEach((target) => {
+                    target.textContent = value;
+                });
+            }
+
+            function renderDemoResult(result) {
+                const renderedFields = flattenDemoResult(result);
+                Object.entries(renderedFields).forEach(([field, value]) => {
+                    setFieldValue(field, value);
+                });
+
+                originalImage.src = result.images.original;
+                originalImage.alt = `${result.label} original demo sample`;
+                watermarkedImage.src = result.images.watermarked;
+                watermarkedImage.alt = `${result.label} watermarked demo sample`;
+            }
+
+            function renderSelectorState(activeSampleId) {
+                const buttons = sampleSelector.querySelectorAll("[data-sample-id]");
+                buttons.forEach((button) => {
+                    const isActive = button.dataset.sampleId === activeSampleId;
+                    button.classList.toggle("is-active", isActive);
+                    button.setAttribute("aria-pressed", isActive ? "true" : "false");
+                    button.disabled = isLoading;
+                });
+            }
+
+            function setStatus(message, state = "") {
+                demoStatus.textContent = message;
+                demoStatus.className = "demo-status";
+                if (state) {
+                    demoStatus.classList.add(state);
+                }
+            }
+
+            function setLoadingState(nextLoading) {
+                isLoading = nextLoading;
+                demoWorkbench.classList.toggle("is-processing", nextLoading);
+                renderSelectorState(activeSampleId);
+            }
+
+            async function fetchDemoResult(sampleId) {
+                const response = await fetch(`${API_BASE_URL}/api/demo/embed`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        sample_id: sampleId,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Backend request failed with status ${response.status}.`);
+                }
+
+                return response.json();
+            }
+
+            async function loadSample(sampleId) {
+                activeSampleId = sampleId;
+                setLoadingState(true);
+                const completedStepIds = new Set();
+
+                try {
+                    await runWorkflowPhase(workflowPhases[0], completedStepIds);
+
+                    const resultPromise = fetchDemoResult(sampleId);
+
+                    await runWorkflowPhase(workflowPhases[1], completedStepIds);
+                    await runWorkflowPhase(workflowPhases[2], completedStepIds);
+                    const result = await resultPromise;
+                    await runWorkflowPhase(workflowPhases[3], completedStepIds);
+
+                    renderDemoResult(result);
+                    renderPipelineLog({ completedStepIds });
+                    setPipelinePhase(workflowPhases[4].label, "is-complete");
+                    renderSelectorState(sampleId);
+                    setStatus(`Verification complete — ${result.label} sample ready.`);
+                    await wait(workflowPhases[4].delayMs);
+                } catch (error) {
+                    renderPipelineLog({ completedStepIds });
+                    setPipelinePhase("Workflow interrupted", "is-error");
+                    setStatus(
+                        "Could not load demo data. Start the FastAPI backend on http://127.0.0.1:8000 and try again.",
+                        "is-error"
+                    );
+                    console.error(error);
+                } finally {
+                    setLoadingState(false);
+                }
+            }
+
+            function createSampleButton(sample) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "sample-option";
+                button.dataset.sampleId = sample.id;
+                button.textContent = sample.label;
+                button.setAttribute("aria-pressed", "false");
+                return button;
+            }
+
+            function initializeSampleSelector() {
+                demoSamples.forEach((sample) => {
+                    sampleSelector.appendChild(createSampleButton(sample));
+                });
+
+                sampleSelector.addEventListener("click", (event) => {
+                    const button = event.target.closest("[data-sample-id]");
+                    if (!button) {
+                        return;
+                    }
+
+                    loadSample(button.dataset.sampleId);
+                });
+
+                loadSample(demoSamples[0].id);
+            }
+
+            const aboutLink = document.getElementById("aboutLink");
+            const aboutModal = document.getElementById("aboutModal");
+            const aboutClose = document.getElementById("aboutClose");
+
+            function openAboutModal() {
+                aboutModal.classList.add("is-open");
+                aboutModal.setAttribute("aria-hidden", "false");
+                aboutClose.focus();
+            }
+
+            function closeAboutModal() {
+                aboutModal.classList.remove("is-open");
+                aboutModal.setAttribute("aria-hidden", "true");
+                aboutLink.focus();
+            }
+
+            aboutLink.addEventListener("click", (event) => {
+                event.preventDefault();
+                openAboutModal();
+            });
+
+            aboutClose.addEventListener("click", closeAboutModal);
+
+            aboutModal.addEventListener("click", (event) => {
+                if (event.target === aboutModal) {
+                    closeAboutModal();
+                }
+            });
+
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape" && aboutModal.classList.contains("is-open")) {
+                    closeAboutModal();
+                }
+            });
+
+            [originalImage, watermarkedImage].forEach(bindImageFallback);
+            initializePipelineLog();
+            initializeSampleSelector();
+        </script>
+    </body>
+</html>

@@ -20,11 +20,9 @@
                     radial-gradient(circle at 12% 20%, rgba(59, 130, 246, 0.12), transparent 26rem),
                     linear-gradient(135deg, #020617 0%, #0f172a 54%, #111827 100%);
                 color: #e2e8f0;
-                display: flex;
-                justify-content: center;
-                align-items: stretch;
                 text-align: center;
-                overflow: hidden;
+                overflow-x: hidden;
+                overflow-y: auto;
             }
 
             body::before {
@@ -43,7 +41,10 @@
                 position: relative;
                 width: min(92vw, 920px);
                 margin: 0 auto;
-                padding: 8.5rem 2rem 6.5rem;
+                padding: 8.5rem 2rem 4rem;
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
             }
 
             .site-header {
@@ -117,22 +118,105 @@
 
             .hero-card {
                 position: relative;
-                margin: 0 auto;
+                width: 100%;
+                max-width: 52rem;
+                margin-left: auto;
+                margin-right: auto;
                 padding: 4.5rem 3rem 4rem;
+            }
+
+            .engine-teaser {
+                position: relative;
+                width: 100%;
+            }
+
+            .engine-teaser-card {
+                position: relative;
+                width: 100%;
+                max-width: 52rem;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 2rem;
                 border: 1px solid rgba(148, 163, 184, 0.18);
                 border-radius: 32px;
                 background: rgba(15, 23, 42, 0.48);
                 box-shadow: 0 28px 90px rgba(0, 0, 0, 0.36);
                 backdrop-filter: blur(22px);
+                text-align: left;
             }
 
-            .hero-card::before {
+            .engine-teaser-card::before {
                 content: "";
                 position: absolute;
                 inset: 1px;
                 border-radius: 31px;
                 pointer-events: none;
                 background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 38%);
+            }
+
+            .engine-teaser-card > * {
+                position: relative;
+                z-index: 1;
+            }
+
+            .engine-teaser-layout {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                gap: 1.5rem;
+                align-items: center;
+            }
+
+            .engine-teaser-eyebrow {
+                display: inline-flex;
+                align-items: center;
+                padding: 0.38rem 0.72rem;
+                border: 1px solid rgba(56, 189, 248, 0.28);
+                border-radius: 999px;
+                background: rgba(56, 189, 248, 0.08);
+                color: #7dd3fc;
+                font-size: 0.78rem;
+                font-weight: 600;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+            }
+
+            .engine-teaser-copy h2 {
+                margin: 0.95rem 0 0;
+                font-size: clamp(2rem, 4.8vw, 3rem);
+                line-height: 1;
+                letter-spacing: -0.05em;
+                color: #f8fafc;
+            }
+
+            .engine-teaser-copy p {
+                max-width: 640px;
+                margin: 0.95rem 0 0;
+                font-size: 1rem;
+                line-height: 1.7;
+                color: #cbd5e1;
+            }
+
+            .engine-teaser-link {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 52px;
+                padding: 0.9rem 1.25rem;
+                border: 1px solid rgba(56, 189, 248, 0.35);
+                border-radius: 999px;
+                background: rgba(56, 189, 248, 0.1);
+                color: #f8fafc;
+                font-size: 0.92rem;
+                font-weight: 700;
+                text-decoration: none;
+                white-space: nowrap;
+                transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+            }
+
+            .engine-teaser-link:hover {
+                border-color: rgba(125, 211, 252, 0.55);
+                background: rgba(56, 189, 248, 0.16);
+                transform: translateY(-1px);
             }
 
             .hero-logo-frame {
@@ -172,15 +256,12 @@
             }
 
             footer {
-                position: fixed;
-                left: 0;
-                right: 0;
-                bottom: 18px;
                 font-size: 0.78rem;
                 color: #94a3b8;
-                width: 100%;
+                width: min(92vw, 1040px);
                 text-align: center;
-                padding: 0 1rem;
+                margin: 0 auto;
+                padding: 0 1rem 1.5rem;
             }
 
             .footer-links {
@@ -289,12 +370,13 @@
                 }
 
                 body {
-                    overflow: auto;
+                    overflow-x: hidden;
+                    overflow-y: auto;
                 }
 
                 main {
                     width: 100%;
-                    padding: 6.5rem 1rem 5rem;
+                    padding: 6.5rem 1rem 3rem;
                 }
 
                 .site-header {
@@ -320,15 +402,19 @@
                     border-radius: 24px;
                 }
 
+                .engine-teaser-card {
+                    padding: 1.35rem 1rem;
+                    border-radius: 24px;
+                }
+
                 .hero-logo-frame {
                     padding: 1rem;
                     border-radius: 16px;
                 }
 
-                footer {
-                    position: static;
-                    margin-top: -5.5rem;
-                    padding-bottom: 1rem;
+                .engine-teaser-layout {
+                    grid-template-columns: 1fr;
+                    justify-items: start;
                 }
             }
         </style>
@@ -345,7 +431,7 @@
                 <a href="#about" id="aboutLink">About</a>
                 <a href="/roadmap.html">Roadmap</a>
                 <a href="/whitepaper.html">Whitepaper</a>
-                <a href="/identity.html">Engine</a>
+                <a href="demo.html">Engine</a>
             </nav>
         </header>
         <main>
@@ -358,6 +444,21 @@
                 Secure authorship and provenance for creators.<br />
                 Building verifiable identity systems for digital works.
             </p>
+            </section>
+            <section class="engine-teaser" aria-labelledby="engineTeaserTitle">
+                <div class="engine-teaser-card">
+                    <div class="engine-teaser-layout">
+                        <div class="engine-teaser-copy">
+                            <span class="engine-teaser-eyebrow">Engine Demo</span>
+                            <h2 id="engineTeaserTitle">Invisible watermark verification for real media workflows.</h2>
+                            <p>
+                                Explore a focused preview of Roadscript watermarking with curated sample images,
+                                extraction results, and verification metrics on a dedicated demo page.
+                            </p>
+                        </div>
+                        <a class="engine-teaser-link" href="demo.html">Open demo</a>
+                    </div>
+                </div>
             </section>
         </main>
         <div id="aboutModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="aboutTitle">
