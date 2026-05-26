@@ -1174,8 +1174,11 @@
             </div>
         </footer>
 
+        <script src="scripts/demoMockData.js"></script>
         <script>
+            const USE_FRONTEND_MOCK_DATA = true;
             const API_BASE_URL = window.DEMO_API_BASE || "http://127.0.0.1:8000";
+            const DEMO_MOCK_RESPONSES = window.DEMO_MOCK_RESPONSES || {};
             // Simulated client-side phases keep the demo operational while the real engine
             // integration remains mock-backed.
             const workflowPhases = [
@@ -1191,20 +1194,13 @@
                 { id: "verify", label: "Verification passed" },
                 { id: "decode", label: "Payload decoded" },
             ];
-            const demoSamples = [
-                {
-                    id: "portrait",
-                    label: "Portrait",
-                },
-                {
-                    id: "architecture",
-                    label: "Architecture",
-                },
-                {
-                    id: "landscape",
-                    label: "Landscape",
-                },
-            ];
+            const demoSamples = ["portrait", "architecture", "landscape"]
+                .map((sampleId) => DEMO_MOCK_RESPONSES[sampleId])
+                .filter(Boolean)
+                .map((sample) => ({
+                    id: sample.id,
+                    label: sample.label,
+                }));
 
             const fieldTargets = Array.from(document.querySelectorAll("[data-field]")).reduce((acc, node) => {
                 const key = node.dataset.field;
@@ -1362,6 +1358,15 @@
                 renderSelectorState(activeSampleId);
             }
 
+            function getFrontendMockResult(sampleId) {
+                const sample = DEMO_MOCK_RESPONSES[sampleId];
+                if (!sample) {
+                    throw new Error(`No frontend mock response found for sample "${sampleId}".`);
+                }
+
+                return JSON.parse(JSON.stringify(sample));
+            }
+
             async function fetchDemoResult(sampleId) {
                 const response = await fetch(`${API_BASE_URL}/api/demo/embed`, {
                     method: "POST",
@@ -1380,6 +1385,14 @@
                 return response.json();
             }
 
+            async function loadDemoResult(sampleId) {
+                if (USE_FRONTEND_MOCK_DATA) {
+                    return getFrontendMockResult(sampleId);
+                }
+
+                return fetchDemoResult(sampleId);
+            }
+
             async function loadSample(sampleId) {
                 activeSampleId = sampleId;
                 setLoadingState(true);
@@ -1388,7 +1401,7 @@
                 try {
                     await runWorkflowPhase(workflowPhases[0], completedStepIds);
 
-                    const resultPromise = fetchDemoResult(sampleId);
+                    const resultPromise = loadDemoResult(sampleId);
 
                     await runWorkflowPhase(workflowPhases[1], completedStepIds);
                     await runWorkflowPhase(workflowPhases[2], completedStepIds);
@@ -1405,10 +1418,11 @@
                     renderPipelineLog({ completedStepIds });
                     setPipelinePhase("Workflow interrupted", "is-error");
                     setStatus(
-                        "Could not load demo data. Start the FastAPI backend on http://127.0.0.1:8000 and try again.",
+                        USE_FRONTEND_MOCK_DATA
+                            ? "Could not load the selected sample. Refresh and try again."
+                            : "Could not load demo data. Start the FastAPI backend on http://127.0.0.1:8000 and try again.",
                         "is-error"
                     );
-                    console.error(error);
                 } finally {
                     setLoadingState(false);
                 }
@@ -1438,7 +1452,12 @@
                     loadSample(button.dataset.sampleId);
                 });
 
-                loadSample(demoSamples[0].id);
+                if (demoSamples.length > 0) {
+                    loadSample(demoSamples[0].id);
+                } else {
+                    setPipelinePhase("No samples available", "is-error");
+                    setStatus("No frontend demo samples are configured.", "is-error");
+                }
             }
 
             const aboutLink = document.getElementById("aboutLink");

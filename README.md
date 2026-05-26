@@ -9,7 +9,8 @@ FastAPI mock backend contract used to simulate verification results during local
 
 - Static multi-page website
 - Product-oriented demo experience for the watermark verification workflow
-- FastAPI mock backend for sample-based demo responses
+- Frontend mock demo data for the deployed website
+- FastAPI mock backend for local and future sample-based integration
 - No production engine execution in this repo yet
 
 The current demo is intentionally sample-driven. It is designed to communicate product direction and system behavior cleanly while backend engine integration is still in progress.
@@ -48,6 +49,9 @@ Then open:
 - `http://127.0.0.1:8080/index.html`
 - `http://127.0.0.1:8080/demo.html`
 
+By default, the deployed site and local static preview use frontend mock demo data from
+`scripts/demoMockData.js`, so `demo.html` works without the FastAPI backend.
+
 ### Available commands
 
 - Preview the static site:
@@ -73,8 +77,8 @@ The demo backend will be available at:
 - `http://127.0.0.1:8000/api/health`
 - `http://127.0.0.1:8000/api/demo/embed`
 
-The frontend demo calls `http://127.0.0.1:8000` by default. See `backend/README.md` for the backend contract
-details and local CORS notes.
+The frontend demo is currently configured to use frontend mock data by default. The FastAPI backend remains available
+as the local and future integration contract. See `backend/README.md` for the response shape and local CORS notes.
 
 ## Repository structure
 
@@ -86,6 +90,8 @@ details and local CORS notes.
 │   │   └── wordmark.svg
 │   └── demo/
 │       └── README.md
+├── scripts/
+│   └── demoMockData.js
 ├── backend/
 │   ├── __init__.py
 │   ├── main.py
@@ -107,9 +113,11 @@ details and local CORS notes.
 ## Mock demo notes
 
 - The public-facing demo is currently driven by preset sample selections.
+- The deployed website reads sample results from `scripts/demoMockData.js` by default.
 - The FastAPI backend returns mock verification results using a typed response contract.
 - Missing demo image assets are handled gracefully by the UI fallback state.
 - The workflow states in `demo.html` are intentionally simulated to preview the future verification experience without claiming production readiness.
+- Re-enabling backend mode later should only require changing `USE_FRONTEND_MOCK_DATA` in `demo.html` and pointing `window.DEMO_API_BASE` to the desired API host.
 
 ## Roadmap
 

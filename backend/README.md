@@ -11,6 +11,9 @@ This backend is intentionally small:
 
 Its job right now is to define the API contract that `demo.html` can talk to, so the current static demo can evolve into a real watermark pipeline later.
 
+The deployed website does not depend on this backend today. `demo.html` uses frontend mock data by default, and this
+FastAPI app remains the local development and future integration contract.
+
 ## Files
 
 - `main.py`
@@ -60,7 +63,7 @@ Because the backend CORS setup allows localhost development origins, opening the
 
 ## Frontend integration
 
-`demo.html` now posts the selected preset sample to:
+`demo.html` can post the selected preset sample to:
 
 ```text
 POST /api/demo/embed
@@ -106,9 +109,13 @@ The response mirrors the current demo result structure:
 }
 ```
 
-By default, `demo.html` calls:
+By default, the deployed website uses frontend mock responses from `scripts/demoMockData.js`.
 
-- `http://127.0.0.1:8000`
+To re-enable backend mode later:
+
+1. Set `USE_FRONTEND_MOCK_DATA = false` near the top of the `demo.html` script.
+2. Ensure `window.DEMO_API_BASE` points at the backend host, or keep the default:
+   - `http://127.0.0.1:8000`
 
 If needed, the frontend API base can be overridden before the demo script runs:
 
