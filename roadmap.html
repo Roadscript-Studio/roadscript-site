@@ -2,15 +2,12 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Roadscript - Home</title>
+        <title>Roadscript - Roadmap</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="assets/brand/favicon.svg" />
         <link rel="apple-touch-icon" href="assets/brand/favicon.svg" />
         <style>
-            * {
-                box-sizing: border-box;
-            }
-
+            * { box-sizing: border-box; }
             body {
                 margin: 0;
                 min-height: 100vh;
@@ -24,7 +21,6 @@
                 overflow-x: hidden;
                 overflow-y: auto;
             }
-
             body::before {
                 content: "";
                 position: fixed;
@@ -36,17 +32,15 @@
                 background-size: 72px 72px;
                 mask-image: radial-gradient(circle at center, black, transparent 72%);
             }
-
             main {
                 position: relative;
-                width: min(92vw, 920px);
+                width: min(92vw, 1080px);
                 margin: 0 auto;
                 padding: 8.5rem 2rem 4rem;
                 display: flex;
                 flex-direction: column;
-                gap: 2rem;
+                gap: 1.4rem;
             }
-
             .site-header {
                 position: fixed;
                 top: 22px;
@@ -64,7 +58,6 @@
                 backdrop-filter: blur(20px);
                 transform: translateX(-50%);
             }
-
             .site-brand {
                 display: inline-flex;
                 align-items: center;
@@ -75,7 +68,6 @@
                 letter-spacing: -0.02em;
                 text-decoration: none;
             }
-
             .site-brand-mark {
                 display: inline-flex;
                 align-items: center;
@@ -86,12 +78,7 @@
                 background: white;
                 box-shadow: 0 8px 26px rgba(0, 0, 0, 0.25);
             }
-
-            .site-brand-mark img {
-                width: 18px;
-                height: 18px;
-            }
-
+            .site-brand-mark img { width: 18px; height: 18px; }
             .site-nav {
                 display: flex;
                 align-items: center;
@@ -99,7 +86,6 @@
                 flex-wrap: wrap;
                 justify-content: flex-end;
             }
-
             .site-nav a {
                 color: #cbd5e1;
                 text-decoration: none;
@@ -109,34 +95,13 @@
                 font-size: 0.86rem;
                 transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
             }
-
-            .site-nav a:hover {
+            .site-nav a:hover, .site-nav a[aria-current="page"] {
                 color: white;
                 border-color: rgba(56, 189, 248, 0.45);
                 background: rgba(56, 189, 248, 0.1);
             }
-
-            .hero-card {
+            .page-card, .content-card {
                 position: relative;
-                width: 100%;
-                max-width: 52rem;
-                margin-left: auto;
-                margin-right: auto;
-                padding: 4.5rem 3rem 4rem;
-            }
-
-            .engine-teaser {
-                position: relative;
-                width: 100%;
-            }
-
-            .engine-teaser-card {
-                position: relative;
-                width: 100%;
-                max-width: 52rem;
-                margin-left: auto;
-                margin-right: auto;
-                padding: 2rem;
                 border: 1px solid rgba(148, 163, 184, 0.18);
                 border-radius: 32px;
                 background: rgba(15, 23, 42, 0.48);
@@ -144,8 +109,7 @@
                 backdrop-filter: blur(22px);
                 text-align: left;
             }
-
-            .engine-teaser-card::before {
+            .page-card::before, .content-card::before {
                 content: "";
                 position: absolute;
                 inset: 1px;
@@ -153,20 +117,9 @@
                 pointer-events: none;
                 background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 38%);
             }
-
-            .engine-teaser-card > * {
-                position: relative;
-                z-index: 1;
-            }
-
-            .engine-teaser-layout {
-                display: grid;
-                grid-template-columns: minmax(0, 1fr) auto;
-                gap: 1.5rem;
-                align-items: center;
-            }
-
-            .engine-teaser-eyebrow {
+            .page-card, .content-card { padding: 2rem; }
+            .page-card > *, .content-card > * { position: relative; z-index: 1; }
+            .eyebrow, .section-label {
                 display: inline-flex;
                 align-items: center;
                 padding: 0.38rem 0.72rem;
@@ -179,82 +132,35 @@
                 letter-spacing: 0.12em;
                 text-transform: uppercase;
             }
-
-            .engine-teaser-copy h2 {
-                margin: 0.95rem 0 0;
-                font-size: clamp(2rem, 4.8vw, 3rem);
-                line-height: 1;
-                letter-spacing: -0.05em;
-                color: #f8fafc;
-            }
-
-            .engine-teaser-copy p {
-                max-width: 640px;
-                margin: 0.95rem 0 0;
-                font-size: 1rem;
-                line-height: 1.7;
-                color: #cbd5e1;
-            }
-
-            .engine-teaser-link {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                min-height: 52px;
-                padding: 0.9rem 1.25rem;
-                border: 1px solid rgba(56, 189, 248, 0.35);
-                border-radius: 999px;
-                background: rgba(56, 189, 248, 0.1);
-                color: #f8fafc;
-                font-size: 0.92rem;
-                font-weight: 700;
-                text-decoration: none;
-                white-space: nowrap;
-                transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
-            }
-
-            .engine-teaser-link:hover {
-                border-color: rgba(125, 211, 252, 0.55);
-                background: rgba(56, 189, 248, 0.16);
-                transform: translateY(-1px);
-            }
-
-            .hero-logo-frame {
-                position: relative;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                width: min(100%, 560px);
-                padding: 1.75rem 2rem;
-                border: 1px solid rgba(255, 255, 255, 0.88);
-                border-radius: 22px;
-                background: #ffffff;
-                box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
-            }
-
-            .hero-logo-frame img {
-                display: block;
-                width: 100%;
-                max-width: 500px;
-                height: auto;
-            }
-
-            h1 {
-                margin: 1.2rem 0 0;
-                font-size: clamp(2.7rem, 6vw, 5.25rem);
+            .page-card h1 {
+                margin: 1rem 0 0;
+                font-size: clamp(2.4rem, 5vw, 4rem);
                 line-height: 0.95;
                 letter-spacing: -0.06em;
                 color: #f8fafc;
             }
-
-            p {
-                max-width: 620px;
-                margin: 1.35rem auto 0;
-                font-size: clamp(1.05rem, 2vw, 1.28rem);
-                line-height: 1.55;
+            .page-card p, .content-card p, .content-card li {
                 color: #cbd5e1;
+                line-height: 1.7;
+                font-size: 1rem;
             }
-
+            .page-card p { max-width: 760px; margin: 1rem 0 0; }
+            .content-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1rem;
+            }
+            .content-card h2 {
+                margin: 0.9rem 0 0;
+                color: #f8fafc;
+                font-size: 1.25rem;
+                letter-spacing: -0.03em;
+            }
+            .content-card ul {
+                margin: 1rem 0 0;
+                padding-left: 1.1rem;
+            }
+            .content-card li + li { margin-top: 0.5rem; }
             footer {
                 font-size: 0.78rem;
                 color: #94a3b8;
@@ -263,7 +169,6 @@
                 margin: 0 auto;
                 padding: 0 1rem 1.5rem;
             }
-
             .footer-links {
                 display: flex;
                 justify-content: center;
@@ -271,25 +176,13 @@
                 flex-wrap: wrap;
                 gap: 0.35rem 0.65rem;
             }
-
             .footer-links a {
                 color: #cbd5e1;
                 text-decoration: none;
                 opacity: 0.76;
                 white-space: nowrap;
-                transition: opacity 0.2s ease, color 0.2s ease;
             }
-
-            .footer-links a:hover {
-                opacity: 1;
-                text-decoration: underline;
-            }
-
-            .footer-copy {
-                margin-top: 6px;
-                opacity: 0.62;
-            }
-
+            .footer-links a:hover { opacity: 1; text-decoration: underline; }
             .modal {
                 display: none;
                 position: fixed;
@@ -301,11 +194,7 @@
                 justify-content: center;
                 padding: 1.5rem;
             }
-
-            .modal.is-open {
-                display: flex;
-            }
-
+            .modal.is-open { display: flex; }
             .modal-content {
                 position: relative;
                 max-width: 560px;
@@ -316,106 +205,26 @@
                 background: rgba(15, 23, 42, 0.96);
                 box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
                 text-align: left;
-                animation: modalFadeIn 0.2s ease;
             }
-
-            .modal-content h2 {
-                margin: 0 0 0.35rem;
-                font-size: 1.6rem;
-            }
-
-            .modal-subtitle {
-                margin: 0 0 1.2rem;
-                color: #94a3b8;
-                font-size: 0.95rem;
-            }
-
-            .modal-content p {
-                margin: 0;
-                font-size: 1rem;
-                line-height: 1.7;
-                opacity: 0.88;
-            }
-
+            .modal-content h2 { margin: 0 0 0.35rem; font-size: 1.6rem; }
+            .modal-subtitle { margin: 0 0 1.2rem; color: #94a3b8; font-size: 0.95rem; }
+            .modal-content p { margin: 0; font-size: 1rem; line-height: 1.7; opacity: 0.88; }
             .modal-close {
-                position: absolute;
-                top: 1rem;
-                right: 1rem;
-                border: none;
-                background: transparent;
-                color: #94a3b8;
-                font-size: 1.5rem;
-                line-height: 1;
-                cursor: pointer;
+                position: absolute; top: 1rem; right: 1rem; border: none; background: transparent;
+                color: #94a3b8; font-size: 1.5rem; line-height: 1; cursor: pointer;
             }
-
-            .modal-close:hover {
-                color: white;
-            }
-
-            @keyframes modalFadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
+            .modal-close:hover { color: white; }
             @media (max-width: 640px) {
-                .modal-content {
-                    padding: 1.5rem;
-                }
-
-                body {
-                    overflow-x: hidden;
-                    overflow-y: auto;
-                }
-
-                main {
-                    width: 100%;
-                    padding: 6.5rem 1rem 3rem;
-                }
-
+                .modal-content { padding: 1.5rem; }
+                main { width: 100%; padding: 6.5rem 1rem 3rem; }
                 .site-header {
-                    top: 12px;
-                    width: calc(100% - 24px);
-                    align-items: flex-start;
-                    border-radius: 24px;
-                    padding: 0.85rem;
-                    gap: 0.75rem;
+                    top: 12px; width: calc(100% - 24px); align-items: flex-start;
+                    border-radius: 24px; padding: 0.85rem; gap: 0.75rem;
                 }
-
-                .site-nav {
-                    gap: 0.25rem;
-                }
-
-                .site-nav a {
-                    padding: 0.48rem 0.62rem;
-                    font-size: 0.78rem;
-                }
-
-                .hero-card {
-                    padding: 2rem 1.1rem 2rem;
-                    border-radius: 24px;
-                }
-
-                .engine-teaser-card {
-                    padding: 1.35rem 1rem;
-                    border-radius: 24px;
-                }
-
-                .hero-logo-frame {
-                    padding: 1rem;
-                    border-radius: 16px;
-                }
-
-                .engine-teaser-layout {
-                    grid-template-columns: 1fr;
-                    justify-items: start;
-                }
+                .site-nav { gap: 0.25rem; }
+                .site-nav a { padding: 0.48rem 0.62rem; font-size: 0.78rem; }
+                .page-card, .content-card { border-radius: 24px; padding: 1.35rem 1rem; }
+                .content-grid { grid-template-columns: 1fr; }
             }
         </style>
     </head>
@@ -429,36 +238,56 @@
             </a>
             <nav class="site-nav">
                 <a href="#about" id="aboutLink">About</a>
-                <a href="roadmap.html">Roadmap</a>
+                <a href="roadmap.html" aria-current="page">Roadmap</a>
                 <a href="whitepaper.html">Whitepaper</a>
                 <a href="demo.html">Engine</a>
             </nav>
         </header>
         <main>
-            <section class="hero-card" aria-label="Roadscript introduction">
-                <div class="hero-logo-frame">
-                    <img src="assets/brand/wordmark.svg" alt="Roadscript Wordmark">
-                </div>
-                <h1>Roadscript</h1>
-            <p>
-                Invisible watermarking for image authenticity.<br />
-                Building verifiable identity systems for digital works.
-            </p>
+            <section class="page-card" aria-labelledby="roadmapTitle">
+                <span class="eyebrow">Roadmap</span>
+                <h1 id="roadmapTitle">Building Roadscript from research prototype to product system.</h1>
+                <p>
+                    The near-term goal is a trustworthy watermark verification product that stays technically honest:
+                    local-first engine direction, explicit product surfaces, and a measured path from sample demo to
+                    real user workflows.
+                </p>
             </section>
-            <section class="engine-teaser" aria-labelledby="engineTeaserTitle">
-                <div class="engine-teaser-card">
-                    <div class="engine-teaser-layout">
-                        <div class="engine-teaser-copy">
-                            <span class="engine-teaser-eyebrow">Engine Demo</span>
-                            <h2 id="engineTeaserTitle">Invisible watermark verification for real media workflows.</h2>
-                            <p>
-                                Explore a focused preview of Roadscript watermarking with curated sample images,
-                                extraction results, and verification metrics on a dedicated demo page.
-                            </p>
-                        </div>
-                        <a class="engine-teaser-link" href="demo.html">Open demo</a>
-                    </div>
-                </div>
+            <section class="content-grid" aria-label="Roadscript roadmap stages">
+                <article class="content-card">
+                    <span class="section-label">Current stage</span>
+                    <h2>Website and sample verification demo</h2>
+                    <p>
+                        Establish a clear product surface, a recruiter-safe public site, and a consistent verification
+                        workflow using sample-driven results and a typed backend contract.
+                    </p>
+                </article>
+                <article class="content-card">
+                    <span class="section-label">Next stage</span>
+                    <h2>Backend engine integration</h2>
+                    <p>
+                        Replace mock responses with real embed and verify execution, beginning with controlled sample
+                        inputs and a stable result contract.
+                    </p>
+                </article>
+                <article class="content-card">
+                    <span class="section-label">Productization</span>
+                    <h2>Upload workflow and account system</h2>
+                    <ul>
+                        <li>Custom image uploads</li>
+                        <li>Credit-based demo or usage model</li>
+                        <li>Operational result history and verification traces</li>
+                    </ul>
+                </article>
+                <article class="content-card">
+                    <span class="section-label">Packaging</span>
+                    <h2>CLI and app releases</h2>
+                    <ul>
+                        <li>Packaged CLI for repeatable watermark operations</li>
+                        <li>App-oriented product surface for non-CLI users</li>
+                        <li>Clear product boundary between engine, UI, and verification workflow</li>
+                    </ul>
+                </article>
             </section>
         </main>
         <div id="aboutModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="aboutTitle">
@@ -477,54 +306,6 @@
         </div>
         <footer>
             <div class="footer-links">
-                <a
-                    href="https://youtube.com/@roadscript0923?si=9QFidjcyGVrqMrV9"
-                    target="_blank"
-                    rel="noopener"
-                    >YouTube</a
-                >
-                ·
-                <a
-                    href="https://www.tiktok.com/@_roadscript?_r=1&_t=ZS-9412rQs6c9V"
-                    target="_blank"
-                    rel="noopener"
-                    >TikTok</a
-                >
-                ·
-                <a
-                    href="https://xhslink.com/m/9elnBCeCVnW"
-                    target="_blank"
-                    rel="noopener"
-                    >rednote</a
-                >
-                ·
-                <a
-                    href="https://b23.tv/IkRxi2q" target="_blank" rel="noopener"
-                    >BiliBili</a
-                >
-                ·
-                <a
-                    href="https://v.douyin.com/645u6oXgdLg/"
-                    target="_blank"
-                    rel="noopener"
-                    >Douyin</a
-                >
-                ·
-                <a
-                    href="https://www.instagram.com/_roadscript?igsh=MWs4dGZzd2w1MXV1Nw%3D%3D&utm_source=qr"
-                    target="_blank"
-                    rel="noopener"
-                    >Instagram</a
-                >
-                ·
-                <a
-                    href="https://pin.it/38tTEXJWl"
-                    target="_blank"
-                    rel="noopener"
-                    >Pinterest</a
-                >
-            </div>
-            <div class="footer-links">
                 © 2026 Roadscript. All rights reserved.
                 <a href="mailto:contact@roadscript.studio">Email</a> ·
                 <a href="https://github.com/Roadscript-Studio">GitHub</a>
@@ -534,32 +315,26 @@
             const aboutLink = document.getElementById("aboutLink");
             const aboutModal = document.getElementById("aboutModal");
             const aboutClose = document.getElementById("aboutClose");
-
             function openAboutModal() {
                 aboutModal.classList.add("is-open");
                 aboutModal.setAttribute("aria-hidden", "false");
                 aboutClose.focus();
             }
-
             function closeAboutModal() {
                 aboutModal.classList.remove("is-open");
                 aboutModal.setAttribute("aria-hidden", "true");
                 aboutLink.focus();
             }
-
             aboutLink.addEventListener("click", (event) => {
                 event.preventDefault();
                 openAboutModal();
             });
-
             aboutClose.addEventListener("click", closeAboutModal);
-
             aboutModal.addEventListener("click", (event) => {
                 if (event.target === aboutModal) {
                     closeAboutModal();
                 }
             });
-
             document.addEventListener("keydown", (event) => {
                 if (event.key === "Escape" && aboutModal.classList.contains("is-open")) {
                     closeAboutModal();

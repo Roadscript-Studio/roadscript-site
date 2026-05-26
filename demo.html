@@ -4,8 +4,8 @@
         <meta charset="UTF-8" />
         <title>Roadscript - Engine Demo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="assets/favicon.svg" />
-        <link rel="apple-touch-icon" href="assets/favicon.svg" />
+        <link rel="icon" href="assets/brand/favicon.svg" />
+        <link rel="apple-touch-icon" href="assets/brand/favicon.svg" />
         <style>
             * {
                 box-sizing: border-box;
@@ -315,7 +315,7 @@
 
             .demo-workbench.is-processing .pipeline-panel::after {
                 opacity: 1;
-                animation: panelSweep 2.1s linear infinite;
+                animation: panelSweep 2.8s linear infinite;
             }
 
             .pipeline-phase {
@@ -392,7 +392,7 @@
                 border-color: rgba(56, 189, 248, 0.35);
                 background: rgba(56, 189, 248, 0.14);
                 box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.18);
-                animation: pipelinePulse 1.45s ease-in-out infinite;
+                animation: pipelinePulse 1.8s ease-in-out infinite;
             }
 
             .pipeline-step.is-complete .pipeline-step-marker {
@@ -434,6 +434,7 @@
                 border: 1px dashed rgba(125, 211, 252, 0.16);
                 border-radius: 18px;
                 background: rgba(15, 23, 42, 0.44);
+                align-content: start;
             }
 
             .upload-zone-title {
@@ -811,10 +812,10 @@
             @keyframes pipelinePulse {
                 0%,
                 100% {
-                    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.14);
+                    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.12);
                 }
                 50% {
-                    box-shadow: 0 0 0 0.28rem rgba(56, 189, 248, 0.05);
+                    box-shadow: 0 0 0 0.2rem rgba(56, 189, 248, 0.04);
                 }
             }
 
@@ -912,16 +913,16 @@
     </head>
     <body>
         <header class="site-header" aria-label="Primary navigation">
-            <a class="site-brand" href="/" aria-label="Roadscript home">
+            <a class="site-brand" href="index.html" aria-label="Roadscript home">
                 <span class="site-brand-mark">
-                    <img src="assets/favicon.svg" alt="" aria-hidden="true" />
+                    <img src="assets/brand/favicon.svg" alt="" aria-hidden="true" />
                 </span>
                 Roadscript
             </a>
             <nav class="site-nav">
                 <a href="#about" id="aboutLink">About</a>
-                <a href="/roadmap.html">Roadmap</a>
-                <a href="/whitepaper.html">Whitepaper</a>
+                <a href="roadmap.html">Roadmap</a>
+                <a href="whitepaper.html">Whitepaper</a>
                 <a href="demo.html" aria-current="page">Engine</a>
             </nav>
         </header>
@@ -930,9 +931,9 @@
                 <span class="eyebrow">Engine Demo</span>
                 <h1 id="demoPageTitle">Invisible watermarking, verified through curated samples.</h1>
                 <p>
-                    This static demo page is structured as a future-ready workbench: a lightweight selector drives
-                    centralized sample data, and the rendered metrics can later be replaced with backend responses,
-                    async processing states, and upload-based workflows without redesigning the page.
+                    Explore a verification workflow for Roadscript&rsquo;s watermarking engine through curated sample
+                    runs. The current experience focuses on operational flow, decoded payloads, and product-facing
+                    verification metrics.
                 </p>
             </section>
 
@@ -962,15 +963,15 @@
                         <div class="ops-panel-header">
                             <div>
                                 <span class="kicker">Custom upload</span>
-                                <h3 id="uploadZoneTitle" class="ops-panel-title">Coming soon</h3>
+                                <h3 id="uploadZoneTitle" class="ops-panel-title">Upload workflow</h3>
                             </div>
                         </div>
                         <div class="upload-zone" aria-disabled="true">
                             <p class="upload-zone-copy">
-                                Preset samples drive this phase. Upload handling and real engine execution will
-                                connect here next.
+                                Curated samples are active today. Custom file ingestion will join the same
+                                verification pipeline once backend execution and account-based runs are enabled.
                             </p>
-                            <span class="upload-zone-meta">Disabled in mock workflow</span>
+                            <span class="upload-zone-meta">Planned surface</span>
                         </div>
                     </article>
                 </div>
@@ -1108,14 +1109,11 @@
                 <h2 id="aboutTitle">About Roadscript</h2>
                 <p class="modal-subtitle">Engineering systems for authenticity and trust.</p>
                 <p>
-                    Roadscript is an independent engineering initiative focused on building robust and verifiable
-                    systems for digital media. At its core is Cyphra, an invisible watermarking engine based on
-                    transform-domain techniques (DWT, DCT, and QIM) designed to ensure image authenticity while
-                    preserving visual quality. Alongside this, Roadscript explores confusion-aware learning through
-                    Confusion Memory, a research direction that models how systems learn from ambiguity, as well as
-                    low-level system design through MiniCore and MiniOS. From capture to verification and
-                    interpretation, Roadscript reflects a single goal: to design systems that are reliable,
-                    transparent, and grounded in real-world use.
+                    Roadscript is an independent product and engineering initiative focused on invisible watermarking
+                    for image authenticity. The project combines local-first engine design, verification-oriented
+                    workflows, and practical product surfaces for creators, operators, and downstream tools. The
+                    current website and demo communicate the direction of the system while backend execution, upload
+                    handling, and packaged releases continue to mature.
                 </p>
             </div>
         </div>
@@ -1178,6 +1176,8 @@
 
         <script>
             const API_BASE_URL = window.DEMO_API_BASE || "http://127.0.0.1:8000";
+            // Simulated client-side phases keep the demo operational while the real engine
+            // integration remains mock-backed.
             const workflowPhases = [
                 { id: "prepare", label: "Preparing sample", logStepId: "sample", delayMs: 240 },
                 { id: "embed", label: "Embedding watermark", logStepId: "embed", delayMs: 320 },

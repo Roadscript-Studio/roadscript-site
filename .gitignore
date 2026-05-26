@@ -1,2 +1,14 @@
 .DS_Store
 .idea/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*.log
+.pytest_cache/
+.mypy_cache/
+.env
+.env.*
+!.env.example

@@ -1,0 +1,92 @@
+from backend.models import DemoResultResponse
+
+
+MOCK_DEMO_RESULTS = {
+    "portrait": DemoResultResponse.model_validate(
+        {
+            "id": "portrait",
+            "label": "Portrait",
+            "images": {
+                "original": "assets/demo/portrait-original.png",
+                "watermarked": "assets/demo/portrait-watermarked.png",
+            },
+            "verification": "PASS",
+            "decoded_payload": "hello",
+            "metrics": {
+                "snr": "64.48 dB",
+                "utilization": "0.41%",
+                "embed_time": "181.99 ms",
+                "verify_time": "213.72 ms",
+                "capacity": "23625 bits",
+                "message_size": "5 bytes",
+                "required_bits": "96",
+                "fits": "yes",
+            },
+            "profile": {
+                "layout": "center-ring",
+                "step": "30",
+                "key_mode": "none",
+                "prng": "Roadscript PRNG v1",
+                "haar": "Roadscript Haar v1",
+            },
+        }
+    ),
+    "architecture": DemoResultResponse.model_validate(
+        {
+            "id": "architecture",
+            "label": "Architecture",
+            "images": {
+                "original": "assets/demo/architecture-original.png",
+                "watermarked": "assets/demo/architecture-watermarked.png",
+            },
+            "verification": "PASS",
+            "decoded_payload": "arch",
+            "metrics": {
+                "snr": "63.91 dB",
+                "utilization": "0.57%",
+                "embed_time": "194.83 ms",
+                "verify_time": "221.14 ms",
+                "capacity": "23625 bits",
+                "message_size": "4 bytes",
+                "required_bits": "88",
+                "fits": "yes",
+            },
+            "profile": {
+                "layout": "center-ring",
+                "step": "28",
+                "key_mode": "none",
+                "prng": "Roadscript PRNG v1",
+                "haar": "Roadscript Haar v1",
+            },
+        }
+    ),
+    "landscape": DemoResultResponse.model_validate(
+        {
+            "id": "landscape",
+            "label": "Landscape",
+            "images": {
+                "original": "assets/demo/landscape-original.png",
+                "watermarked": "assets/demo/landscape-watermarked.png",
+            },
+            "verification": "PASS",
+            "decoded_payload": "vista",
+            "metrics": {
+                "snr": "65.12 dB",
+                "utilization": "0.49%",
+                "embed_time": "176.42 ms",
+                "verify_time": "209.37 ms",
+                "capacity": "23625 bits",
+                "message_size": "5 bytes",
+                "required_bits": "96",
+                "fits": "yes",
+            },
+            "profile": {
+                "layout": "center-ring",
+                "step": "32",
+                "key_mode": "none",
+                "prng": "Roadscript PRNG v1",
+                "haar": "Roadscript Haar v1",
+            },
+        }
+    ),
+}

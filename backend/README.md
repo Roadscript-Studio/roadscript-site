@@ -1,6 +1,6 @@
 # Roadscript Demo Backend
 
-Minimal FastAPI scaffold for the Phase 2 Engine Demo transition.
+Minimal FastAPI mock contract for the Roadscript website demo.
 
 This backend is intentionally small:
 - no database
@@ -19,6 +19,8 @@ Its job right now is to define the API contract that `demo.html` can talk to, so
   Typed request and response models
 - `services/demo_service.py`
   Mock demo service that returns structured sample results
+- `services/mock_samples.py`
+  Centralized mock response catalog used by the website demo
 
 ## Run locally
 
