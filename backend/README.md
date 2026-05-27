@@ -2,6 +2,8 @@
 
 Minimal FastAPI mock contract for the Roadscript website demo.
 
+This backend lives inside the standalone `Website` repository (`roadscript-site` on GitHub).
+
 This backend is intentionally small:
 - no database
 - no uploads
@@ -27,7 +29,7 @@ FastAPI app remains the local development and future integration contract.
 
 ## Run locally
 
-From the repo root:
+From the `Website` repository root:
 
 ```bash
 python3 -m venv .venv
@@ -45,7 +47,7 @@ The API will be available at:
 
 The demo frontend should be served from a localhost HTTP server during development.
 
-In a second terminal, from the repo root:
+In a second terminal, from the `Website` repository root:
 
 ```bash
 python3 -m http.server 8080

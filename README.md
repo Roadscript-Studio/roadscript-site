@@ -2,8 +2,11 @@
 
 Roadscript is a product and engineering project focused on invisible watermarking for image authenticity, provenance, and verification workflows.
 
-This repository contains the recruiter-facing Roadscript website, a sample-driven product demo, and a minimal
-FastAPI mock backend contract used to simulate verification results during local development.
+This standalone `Website` repository is the Roadscript public website and demo surface. On GitHub, the repository is
+named `roadscript-site`.
+
+It contains the recruiter-facing Roadscript website, a sample-driven product demo, and a minimal FastAPI mock backend
+contract used to simulate verification results during local development.
 
 ## Current status
 
@@ -38,7 +41,7 @@ There is no frontend build step in this repository. The public website is a ligh
 
 ### 1. Preview the static website
 
-From the repository root:
+From the `Website` repository root:
 
 ```bash
 python3 -m http.server 8080
@@ -129,6 +132,7 @@ as the local and future integration contract. See `backend/README.md` for the re
 ## Repo hygiene
 
 - Editor files, Python cache files, virtual environments, and system junk should remain untracked
+- Typical website build artifacts such as `node_modules/`, `dist/`, `build/`, and `.vite/` should remain untracked
 - No secrets or production credentials belong in this repository
 - Sample/demo behavior should remain clearly separated from real engine execution code
 

@@ -1,6 +1,10 @@
 .DS_Store
 .idea/
 .venv/
+node_modules/
+dist/
+build/
+.vite/
 __pycache__/
 *.pyc
 *.pyo
@@ -10,5 +14,6 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .env
+.env.local
 .env.*
 !.env.example
