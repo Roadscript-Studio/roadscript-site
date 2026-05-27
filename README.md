@@ -1,45 +1,51 @@
-# Roadscript Website
+# Roadscript Site
 
-Roadscript is a product and engineering project focused on invisible watermarking for image authenticity, provenance, and verification workflows.
+`roadscript-site` is the public website and demo surface for Roadscript.
 
-This standalone `Website` repository is the Roadscript public website and demo surface. On GitHub, the repository is
-named `roadscript-site`.
+Roadscript is an authenticity tooling project focused on media provenance, invisible watermarking workflows, and verification-oriented product experiences. This repository presents the public-facing website, sample-driven demo flow, and local mock backend contract used to communicate the product direction without exposing the private core engine implementation.
 
-It contains the recruiter-facing Roadscript website, a sample-driven product demo, and a minimal FastAPI mock backend
-contract used to simulate verification results during local development.
+## Repository role
+
+This repository is part of the Roadscript public/private repository ecosystem:
+
+| Repository | Visibility | Purpose |
+|---|---:|---|
+| [`roadscript-docs`](https://github.com/Roadscript-Studio/roadscript-docs) | Public | Public overview, architecture notes, repository boundaries, and development milestones. |
+| [`roadscript-cli`](https://github.com/Roadscript-Studio/roadscript-cli) | Public | Standalone CLI, workflow DSL, local TUI prototype, examples, tests, and tooling. |
+| [`roadscript-site`](https://github.com/Roadscript-Studio/roadscript-site) | Public | Public website and sample-driven demo surface. |
+| `roadscript-engine` | Private | Private C++ core package consumed by the application layer. |
+
+The site is intentionally separated from the private engine. It demonstrates product flow and system behavior at the presentation layer while engine integration remains under active development.
 
 ## Current status
 
 - Static multi-page website
-- Product-oriented demo experience for the watermark verification workflow
-- Frontend mock demo data for the deployed website
-- FastAPI mock backend for local and future sample-based integration
-- No production engine execution in this repo yet
+- Public product overview and roadmap pages
+- Sample-driven verification workflow demo
+- Frontend mock demo data for deployed static hosting
+- Minimal FastAPI mock backend contract for local development and future integration
+- No production engine execution in this repository
 
-The current demo is intentionally sample-driven. It is designed to communicate product direction and system behavior cleanly while backend engine integration is still in progress.
+The current demo is intentionally sample-driven. It is designed to communicate Roadscript’s product direction and verification workflow without claiming production readiness.
 
 ## Tech stack
 
 - Static HTML, CSS, and vanilla JavaScript
-- FastAPI for the mock demo backend contract
+- FastAPI for the local mock backend contract
 - Cloudflare Pages hosting for the public website
 
 There is no frontend build step in this repository. The public website is a lightweight static site.
 
 ## Website pages
 
-- `index.html`
-  Homepage and product overview
-- `demo.html`
-  Interactive verification workflow demo
-- `roadmap.html`
-  Product and engineering roadmap
-- `whitepaper.html`
-  Product thesis and technical direction summary
+- `index.html` — homepage and product overview
+- `demo.html` — interactive verification workflow demo
+- `roadmap.html` — product and engineering roadmap
+- `whitepaper.html` — product thesis and technical direction summary
 
 ## Local development
 
-### 1. Preview the static website
+### Preview the static website
 
 From the `Website` repository root:
 
@@ -49,39 +55,56 @@ python3 -m http.server 8080
 
 Then open:
 
-- `http://127.0.0.1:8080/index.html`
-- `http://127.0.0.1:8080/demo.html`
+```text
+http://127.0.0.1:8080/index.html
+http://127.0.0.1:8080/demo.html
+```
 
-By default, the deployed site and local static preview use frontend mock demo data from
-`scripts/demoMockData.js`, so `demo.html` works without the FastAPI backend.
+By default, the deployed site and local static preview use frontend mock demo data from:
 
-### Available commands
+```text
+scripts/demoMockData.js
+```
 
-- Preview the static site:
-  `python3 -m http.server 8080`
-- Run the mock backend:
-  `uvicorn backend.main:app --reload`
-- Validate backend modules:
-  `python3 -m compileall backend`
+That means `demo.html` works without the FastAPI backend.
 
-### 2. Run the mock backend contract
+### Run the mock backend contract
 
-Create and activate a virtual environment, then install backend requirements:
+Create and activate a virtual environment:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r backend/requirements.txt
+```
+
+Start the mock backend:
+
+```bash
 uvicorn backend.main:app --reload
 ```
 
-The demo backend will be available at:
+The local API will be available at:
 
-- `http://127.0.0.1:8000/api/health`
-- `http://127.0.0.1:8000/api/demo/embed`
+```text
+http://127.0.0.1:8000/api/health
+http://127.0.0.1:8000/api/demo/embed
+```
 
-The frontend demo is currently configured to use frontend mock data by default. The FastAPI backend remains available
-as the local and future integration contract. See `backend/README.md` for the response shape and local CORS notes.
+The frontend demo currently uses frontend mock data by default. The FastAPI backend remains available as a local development contract for future integration work. See [`backend/README.md`](backend/README.md) for the response shape and local CORS notes.
+
+### Useful commands
+
+```bash
+# Preview the static site
+python3 -m http.server 8080
+
+# Run the mock backend
+uvicorn backend.main:app --reload
+
+# Validate backend modules
+python3 -m compileall backend
+```
 
 ## Repository structure
 
@@ -113,28 +136,42 @@ as the local and future integration contract. See `backend/README.md` for the re
 └── README.md
 ```
 
-## Mock demo notes
+## Demo behavior
 
-- The public-facing demo is currently driven by preset sample selections.
-- The deployed website reads sample results from `scripts/demoMockData.js` by default.
+The public-facing demo is currently driven by preset sample selections.
+
+- Deployed pages read sample results from `scripts/demoMockData.js`.
 - The FastAPI backend returns mock verification results using a typed response contract.
-- Missing demo image assets are handled gracefully by the UI fallback state.
-- The workflow states in `demo.html` are intentionally simulated to preview the future verification experience without claiming production readiness.
-- Re-enabling backend mode later should only require changing `USE_FRONTEND_MOCK_DATA` in `demo.html` and pointing `window.DEMO_API_BASE` to the desired API host.
+- Missing demo image assets are handled by the UI fallback state.
+- Workflow states in `demo.html` are simulated to preview the future verification experience.
+- No real engine execution, upload processing, or production verification job is performed by this repository.
+
+Backend mode can be re-enabled later by changing `USE_FRONTEND_MOCK_DATA` in `demo.html` and pointing `window.DEMO_API_BASE` to the desired API host.
 
 ## Roadmap
 
+Planned directions include:
+
 - Real custom upload workflow
-- Backend engine integration for watermark embed and verify operations
-- Credit and account system for productized runs
+- Backend integration with the private Roadscript engine package
+- Account and credit system for productized runs
 - Packaged CLI and desktop/app releases
+- More complete public demo assets and product documentation
+
+These items are under active development and should not be interpreted as production availability.
+
+## Related repositories
+
+- [`roadscript-docs`](https://github.com/Roadscript-Studio/roadscript-docs) — public overview, architecture notes, and repository boundaries.
+- [`roadscript-cli`](https://github.com/Roadscript-Studio/roadscript-cli) — standalone CLI, workflow DSL, local TUI prototype, examples, tests, and tooling.
+- `roadscript-engine` — private C++ core package used behind the application layer.
 
 ## Repo hygiene
 
-- Editor files, Python cache files, virtual environments, and system junk should remain untracked
-- Typical website build artifacts such as `node_modules/`, `dist/`, `build/`, and `.vite/` should remain untracked
-- No secrets or production credentials belong in this repository
-- Sample/demo behavior should remain clearly separated from real engine execution code
+- Editor files, Python cache files, virtual environments, and system junk should remain untracked.
+- Website build artifacts such as `node_modules/`, `dist/`, `build/`, and `.vite/` should remain untracked.
+- No secrets, tokens, production credentials, or private keys belong in this repository.
+- Sample/demo behavior should remain clearly separated from real engine execution code.
 
 ## License / status
 
