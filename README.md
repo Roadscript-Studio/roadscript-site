@@ -11,7 +11,7 @@ This repository is part of the Roadscript public/private repository ecosystem:
 | Repository | Visibility | Purpose |
 |---|---:|---|
 | [`roadscript-docs`](https://github.com/Roadscript-Studio/roadscript-docs) | Public | Public overview, architecture notes, repository boundaries, and development milestones. |
-| [`roadscript-cli`](https://github.com/Roadscript-Studio/roadscript-cli) | Public | Standalone CLI, workflow DSL, local TUI prototype, examples, tests, and tooling. |
+| [`cyphra-cli`](https://github.com/Roadscript-Studio/cyphra-cli) | Public | Public repository for Cyphra CLI, the developer-facing command-line and workflow layer. |
 | [`roadscript-site`](https://github.com/Roadscript-Studio/roadscript-site) | Public | Public website and sample-driven demo surface. |
 | `roadscript-engine` | Private | Private C++ core package consumed by the application layer. |
 
@@ -163,7 +163,7 @@ These items are under active development and should not be interpreted as produc
 ## Related repositories
 
 - [`roadscript-docs`](https://github.com/Roadscript-Studio/roadscript-docs) — public overview, architecture notes, and repository boundaries.
-- [`roadscript-cli`](https://github.com/Roadscript-Studio/roadscript-cli) — standalone CLI, workflow DSL, local TUI prototype, examples, tests, and tooling.
+- [`cyphra-cli`](https://github.com/Roadscript-Studio/cyphra-cli) — public repository for Cyphra CLI, the developer-facing command-line and workflow layer.
 - `roadscript-engine` — private C++ core package used behind the application layer.
 
 ## Repo hygiene
