@@ -2,25 +2,51 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Roadscript - Home</title>
+        <title>Roadscript - Authenticity Infrastructure for Digital Media</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Roadscript is building invisible authenticity infrastructure for digital media. Cyphra previews a user-friendly verification experience for Roadscript-authenticated media."
+        />
         <link rel="icon" href="assets/brand/favicon.svg" />
         <link rel="apple-touch-icon" href="assets/brand/favicon.svg" />
         <style>
+            :root {
+                --bg-primary: #020617;
+                --bg-secondary: #0f172a;
+                --bg-elevated: rgba(15, 23, 42, 0.62);
+                --bg-panel: rgba(8, 15, 32, 0.74);
+                --bg-tile: rgba(6, 12, 26, 0.72);
+                --border-soft: rgba(148, 163, 184, 0.16);
+                --border-strong: rgba(56, 189, 248, 0.28);
+                --text-primary: #f8fafc;
+                --text-secondary: #cbd5e1;
+                --text-muted: #94a3b8;
+                --accent: #38bdf8;
+                --accent-strong: #7dd3fc;
+                --accent-soft: rgba(56, 189, 248, 0.12);
+                --success-soft: rgba(34, 197, 94, 0.16);
+                --shadow-heavy: 0 28px 90px rgba(0, 0, 0, 0.34);
+            }
+
             * {
                 box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
             }
 
             body {
                 margin: 0;
                 min-height: 100vh;
                 font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+                color-scheme: dark;
                 background:
-                    radial-gradient(circle at 50% 8%, rgba(56, 189, 248, 0.16), transparent 34rem),
-                    radial-gradient(circle at 12% 20%, rgba(59, 130, 246, 0.12), transparent 26rem),
-                    linear-gradient(135deg, #020617 0%, #0f172a 54%, #111827 100%);
-                color: #e2e8f0;
-                text-align: center;
+                    radial-gradient(circle at 50% 5%, rgba(56, 189, 248, 0.18), transparent 36rem),
+                    radial-gradient(circle at 12% 18%, rgba(59, 130, 246, 0.12), transparent 28rem),
+                    linear-gradient(135deg, #020617 0%, #0b1328 52%, #111827 100%);
+                color: var(--text-primary);
                 overflow-x: hidden;
                 overflow-y: auto;
             }
@@ -31,35 +57,41 @@
                 inset: 0;
                 pointer-events: none;
                 background-image:
-                    linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+                    linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
                 background-size: 72px 72px;
                 mask-image: radial-gradient(circle at center, black, transparent 72%);
             }
 
-            main {
-                position: relative;
-                width: min(92vw, 920px);
-                margin: 0 auto;
-                padding: 8.5rem 2rem 4rem;
-                display: flex;
-                flex-direction: column;
-                gap: 2rem;
+            a {
+                color: inherit;
+            }
+
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
             }
 
             .site-header {
                 position: fixed;
                 top: 22px;
                 left: 50%;
-                z-index: 50;
+                z-index: 100;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                width: min(92vw, 1040px);
+                width: min(94vw, 1140px);
                 padding: 0.75rem 0.85rem 0.75rem 1rem;
-                border: 1px solid rgba(148, 163, 184, 0.18);
+                border: 1px solid var(--border-soft);
                 border-radius: 999px;
-                background: rgba(15, 23, 42, 0.62);
+                background: var(--bg-elevated);
                 box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22);
                 backdrop-filter: blur(20px);
                 transform: translateX(-50%);
@@ -69,7 +101,7 @@
                 display: inline-flex;
                 align-items: center;
                 gap: 0.65rem;
-                color: #f8fafc;
+                color: var(--text-primary);
                 font-size: 0.95rem;
                 font-weight: 700;
                 letter-spacing: -0.02em;
@@ -101,7 +133,7 @@
             }
 
             .site-nav a {
-                color: #cbd5e1;
+                color: var(--text-secondary);
                 text-decoration: none;
                 padding: 0.58rem 0.82rem;
                 border: 1px solid transparent;
@@ -116,152 +148,603 @@
                 background: rgba(56, 189, 248, 0.1);
             }
 
-            .hero-card {
+            main {
                 position: relative;
-                width: 100%;
-                max-width: 52rem;
-                margin-left: auto;
-                margin-right: auto;
-                padding: 4.5rem 3rem 4rem;
+                width: min(94vw, 1180px);
+                margin: 0 auto;
+                padding: 8.8rem 2rem 5.75rem;
+                display: flex;
+                flex-direction: column;
+                gap: 5.25rem;
             }
 
-            .engine-teaser {
-                position: relative;
-                width: 100%;
+            .landing-section {
+                scroll-margin-top: 8rem;
             }
 
-            .engine-teaser-card {
-                position: relative;
-                width: 100%;
-                max-width: 52rem;
-                margin-left: auto;
-                margin-right: auto;
-                padding: 2rem;
-                border: 1px solid rgba(148, 163, 184, 0.18);
-                border-radius: 32px;
-                background: rgba(15, 23, 42, 0.48);
-                box-shadow: 0 28px 90px rgba(0, 0, 0, 0.36);
-                backdrop-filter: blur(22px);
-                text-align: left;
-            }
-
-            .engine-teaser-card::before {
-                content: "";
-                position: absolute;
-                inset: 1px;
-                border-radius: 31px;
-                pointer-events: none;
-                background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 38%);
-            }
-
-            .engine-teaser-card > * {
-                position: relative;
-                z-index: 1;
-            }
-
-            .engine-teaser-layout {
-                display: grid;
-                grid-template-columns: minmax(0, 1fr) auto;
-                gap: 1.5rem;
+            .hero {
+                display: flex;
+                flex-direction: column;
+                gap: 1.8rem;
                 align-items: center;
             }
 
-            .engine-teaser-eyebrow {
+            .hero-copy {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1.1rem;
+                width: min(100%, 52rem);
+                margin: 0 auto;
+            }
+
+            .eyebrow {
                 display: inline-flex;
                 align-items: center;
                 padding: 0.38rem 0.72rem;
                 border: 1px solid rgba(56, 189, 248, 0.28);
                 border-radius: 999px;
                 background: rgba(56, 189, 248, 0.08);
-                color: #7dd3fc;
+                color: var(--accent-strong);
                 font-size: 0.78rem;
-                font-weight: 600;
+                font-weight: 700;
                 letter-spacing: 0.12em;
                 text-transform: uppercase;
             }
 
-            .engine-teaser-copy h2 {
-                margin: 0.95rem 0 0;
-                font-size: clamp(2rem, 4.8vw, 3rem);
-                line-height: 1;
-                letter-spacing: -0.05em;
-                color: #f8fafc;
+            h1 {
+                margin: 0;
+                max-width: 13ch;
+                font-size: clamp(2.9rem, 6vw, 5.1rem);
+                line-height: 1.02;
+                letter-spacing: -0.07em;
+                text-wrap: balance;
             }
 
-            .engine-teaser-copy p {
-                max-width: 640px;
-                margin: 0.95rem 0 0;
-                font-size: 1rem;
-                line-height: 1.7;
-                color: #cbd5e1;
+            .hero-copy p {
+                max-width: 43rem;
+                margin: 0;
+                color: var(--text-secondary);
+                font-size: clamp(1.04rem, 1.8vw, 1.2rem);
+                line-height: 1.72;
             }
 
-            .engine-teaser-link {
+            .hero-actions {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.85rem;
+                margin-top: 0.15rem;
+            }
+
+            .button-link {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
                 min-height: 52px;
-                padding: 0.9rem 1.25rem;
-                border: 1px solid rgba(56, 189, 248, 0.35);
+                padding: 0.9rem 1.28rem;
+                border: 1px solid transparent;
                 border-radius: 999px;
-                background: rgba(56, 189, 248, 0.1);
-                color: #f8fafc;
-                font-size: 0.92rem;
+                color: var(--text-primary);
+                font-size: 0.95rem;
                 font-weight: 700;
                 text-decoration: none;
-                white-space: nowrap;
-                transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+                transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
             }
 
-            .engine-teaser-link:hover {
-                border-color: rgba(125, 211, 252, 0.55);
-                background: rgba(56, 189, 248, 0.16);
+            .button-link:hover {
                 transform: translateY(-1px);
             }
 
-            .hero-logo-frame {
+            .button-link.is-primary {
+                border-color: rgba(56, 189, 248, 0.5);
+                background: linear-gradient(135deg, rgba(14, 165, 233, 0.3), rgba(59, 130, 246, 0.18));
+                box-shadow: 0 18px 42px rgba(14, 165, 233, 0.14);
+            }
+
+            .button-link.is-secondary {
+                border-color: rgba(148, 163, 184, 0.28);
+                background: rgba(15, 23, 42, 0.42);
+            }
+
+            .button-link.is-secondary:hover {
+                border-color: rgba(56, 189, 248, 0.45);
+                background: rgba(56, 189, 248, 0.1);
+            }
+
+            .hero-note {
+                max-width: 42rem;
+                color: var(--text-muted);
+                font-size: 0.9rem;
+                line-height: 1.65;
+            }
+
+            .hero-stage {
+                width: 100%;
+            }
+
+            .preview-tile {
                 position: relative;
+                width: 100%;
+                max-width: 1080px;
+                margin: 0 auto;
+                border: 1px solid var(--border-soft);
+                border-radius: 34px;
+                background:
+                    radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 18rem),
+                    linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 26%),
+                    var(--bg-panel);
+                box-shadow: var(--shadow-heavy);
+                overflow: hidden;
+            }
+
+            .preview-tile::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                pointer-events: none;
+                background:
+                    linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+                background-size: 56px 56px;
+                mask-image: linear-gradient(180deg, black, transparent 92%);
+            }
+
+            .preview-tile > * {
+                position: relative;
+                z-index: 1;
+            }
+
+            .preview-topbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1rem 1.1rem;
+                border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+                background: rgba(15, 23, 42, 0.54);
+            }
+
+            .preview-dots {
+                display: inline-flex;
+                gap: 0.38rem;
+            }
+
+            .preview-dots span {
+                width: 10px;
+                height: 10px;
+                border-radius: 999px;
+                background: rgba(148, 163, 184, 0.46);
+            }
+
+            .preview-title {
+                color: var(--text-muted);
+                font-size: 0.82rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+
+            .preview-body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 1.35rem;
+                height: 100%;
+                padding: 1.4rem;
+            }
+
+            .placeholder-surface {
+                min-height: 310px;
+                padding: 1.8rem;
+                border: 1px dashed rgba(125, 211, 252, 0.48);
+                border-radius: 24px;
+                background:
+                    linear-gradient(180deg, rgba(15, 23, 42, 0.58), rgba(15, 23, 42, 0.24)),
+                    radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 14rem);
+                display: flex;
+                align-items: stretch;
+            }
+
+            .preview-scene {
+                display: grid;
+                grid-template-columns: minmax(0, 1.1fr) minmax(240px, 0.9fr);
+                gap: 1.25rem;
+                align-items: end;
+                width: 100%;
+            }
+
+            .preview-copy {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                text-align: left;
+                gap: 0.95rem;
+            }
+
+            .preview-stack {
+                display: grid;
+                gap: 0.9rem;
+            }
+
+            .preview-mini {
+                padding: 0.95rem 1rem;
+                border: 1px solid rgba(125, 211, 252, 0.2);
+                border-radius: 18px;
+                background: rgba(15, 23, 42, 0.52);
+                color: var(--text-muted);
+                font-size: 0.83rem;
+                line-height: 1.5;
+            }
+
+            .preview-mini strong {
+                display: block;
+                margin-bottom: 0.24rem;
+                color: var(--text-primary);
+                font-size: 0.9rem;
+            }
+
+            .placeholder-badge {
                 display: inline-flex;
                 align-items: center;
+                padding: 0.35rem 0.62rem;
+                border-radius: 999px;
+                background: var(--success-soft);
+                color: #86efac;
+                font-size: 0.76rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+
+            .placeholder-surface h2 {
+                margin: 0;
+                font-size: clamp(1.38rem, 3vw, 2rem);
+                line-height: 1.1;
+                letter-spacing: -0.04em;
+            }
+
+            .placeholder-surface p {
+                margin: 0;
+                max-width: 28rem;
+                color: var(--text-secondary);
+                font-size: 0.98rem;
+                line-height: 1.7;
+            }
+
+            .preview-caption {
+                color: var(--text-muted);
+                font-size: 0.88rem;
+                line-height: 1.65;
+                text-align: center;
+            }
+
+            .trust-strip {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 1.1rem;
+            }
+
+            .section-head {
+                display: grid;
+                justify-items: center;
+                text-align: center;
+                gap: 0.9rem;
+                margin: 0 auto 1.95rem;
+                max-width: 48rem;
+            }
+
+            .section-head h2 {
+                margin: 0;
+                max-width: 22ch;
+                font-size: clamp(2rem, 4vw, 3rem);
+                line-height: 1.08;
+                letter-spacing: -0.05em;
+                text-wrap: balance;
+            }
+
+            .section-head p {
+                margin: 0;
+                max-width: 42rem;
+                color: var(--text-secondary);
+                font-size: 1rem;
+                line-height: 1.78;
+            }
+
+            .section-actions {
+                display: flex;
+                flex-wrap: wrap;
                 justify-content: center;
-                width: min(100%, 560px);
-                padding: 1.75rem 2rem;
-                border: 1px solid rgba(255, 255, 255, 0.88);
-                border-radius: 22px;
-                background: #ffffff;
-                box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+                gap: 0.75rem;
+                margin-top: 1.45rem;
             }
 
-            .hero-logo-frame img {
+            .tile-grid {
+                display: grid;
+                gap: 1.2rem;
+            }
+
+            .problem-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .solution-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .demo-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+            }
+
+            .ecosystem-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .tile,
+            .faq-item,
+            .trust-item,
+            .final-cta {
+                border: 1px solid var(--border-soft);
+                border-radius: 28px;
+                background:
+                    radial-gradient(circle at top left, rgba(56, 189, 248, 0.1), transparent 14rem),
+                    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 34%),
+                    var(--bg-tile);
+                box-shadow:
+                    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+                    0 22px 60px rgba(0, 0, 0, 0.18);
+            }
+
+            .tile {
+                padding: 1.65rem;
+                min-height: 100%;
+                transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+            }
+
+            .tile:hover,
+            .faq-item:hover,
+            .trust-item:hover {
+                border-color: rgba(56, 189, 248, 0.26);
+                transform: translateY(-1px);
+            }
+
+            .trust-item {
+                padding: 1.45rem 1.3rem;
+                text-align: center;
+            }
+
+            .trust-item strong {
                 display: block;
-                width: 100%;
-                max-width: 500px;
-                height: auto;
+                color: var(--text-primary);
+                font-size: 1rem;
+                line-height: 1.35;
             }
 
-            h1 {
-                margin: 1.2rem 0 0;
-                font-size: clamp(2.7rem, 6vw, 5.25rem);
-                line-height: 0.95;
-                letter-spacing: -0.06em;
-                color: #f8fafc;
+            .trust-item span {
+                display: block;
+                margin-top: 0.55rem;
+                color: var(--text-muted);
+                font-size: 0.9rem;
+                line-height: 1.68;
             }
 
-            p {
-                max-width: 620px;
-                margin: 1.35rem auto 0;
-                font-size: clamp(1.05rem, 2vw, 1.28rem);
-                line-height: 1.55;
-                color: #cbd5e1;
+            .tile h3,
+            .faq-item summary {
+                margin: 0;
+                font-size: 1.1rem;
+                line-height: 1.3;
+                letter-spacing: -0.03em;
+                color: var(--text-primary);
+            }
+
+            .tile p {
+                margin: 0.78rem 0 0;
+                color: var(--text-secondary);
+                font-size: 0.97rem;
+                line-height: 1.72;
+            }
+
+            .solution-tile.is-accent,
+            .ecosystem-tile.is-accent {
+                background:
+                    radial-gradient(circle at top right, rgba(56, 189, 248, 0.18), transparent 16rem),
+                    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 34%),
+                    rgba(6, 12, 26, 0.78);
+                border-color: rgba(56, 189, 248, 0.22);
+            }
+
+            .tile-label {
+                display: inline-flex;
+                align-items: center;
+                margin-bottom: 0.86rem;
+                padding: 0.34rem 0.62rem;
+                border-radius: 999px;
+                background: var(--accent-soft);
+                color: var(--accent-strong);
+                font-size: 0.78rem;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+
+            .status-badge {
+                display: inline-flex;
+                align-items: center;
+                padding: 0.28rem 0.56rem;
+                border-radius: 999px;
+                background: rgba(56, 189, 248, 0.12);
+                color: var(--accent-strong);
+                font-size: 0.72rem;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                white-space: nowrap;
+            }
+
+            .demo-card-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.8rem;
+            }
+
+            .demo-placeholder {
+                min-height: 240px;
+                margin-top: 1rem;
+                padding: 1.18rem;
+                border: 1px dashed rgba(125, 211, 252, 0.34);
+                border-radius: 22px;
+                background:
+                    linear-gradient(180deg, rgba(15, 23, 42, 0.54), rgba(15, 23, 42, 0.22)),
+                    radial-gradient(circle at top left, rgba(56, 189, 248, 0.11), transparent 12rem);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                color: var(--text-muted);
+                font-size: 0.93rem;
+                line-height: 1.7;
+                text-wrap: balance;
+            }
+
+            .metric-value {
+                color: var(--text-primary);
+                font-size: 1.18rem;
+                font-weight: 700;
+                line-height: 1.2;
+                letter-spacing: -0.03em;
+            }
+
+            .metric-detail {
+                margin-top: 0.7rem;
+                color: var(--text-muted);
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
+
+            .tile-link {
+                display: inline-flex;
+                align-items: center;
+                margin-top: 0.92rem;
+                color: var(--accent-strong);
+                font-size: 0.88rem;
+                font-weight: 600;
+                text-decoration: none;
+            }
+
+            .tile-link:hover {
+                text-decoration: underline;
+            }
+
+            .faq-list {
+                display: grid;
+                gap: 1rem;
+            }
+
+            .faq-item {
+                padding: 0;
+                overflow: hidden;
+            }
+
+            .faq-item summary {
+                cursor: pointer;
+                list-style: none;
+                padding: 1.25rem 1.4rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                transition: background 0.2s ease, color 0.2s ease;
+            }
+
+            .faq-item summary::-webkit-details-marker {
+                display: none;
+            }
+
+            .faq-item summary:hover {
+                background: rgba(56, 189, 248, 0.06);
+            }
+
+            .faq-item summary::after {
+                content: "+";
+                color: var(--accent);
+                font-size: 1.2rem;
+                line-height: 1;
+                flex: 0 0 auto;
+            }
+
+            .faq-item[open] summary::after {
+                content: "−";
+            }
+
+            .faq-answer {
+                padding: 0 1.4rem 1.35rem;
+                max-width: 62rem;
+                color: var(--text-secondary);
+                font-size: 0.97rem;
+                line-height: 1.75;
+            }
+
+            .final-cta {
+                padding: 3.1rem 2.8rem;
+                border-color: rgba(56, 189, 248, 0.18);
+                background:
+                    radial-gradient(circle at top center, rgba(56, 189, 248, 0.22), transparent 20rem),
+                    linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 24%),
+                    rgba(10, 17, 34, 0.8);
+                box-shadow: var(--shadow-heavy);
+            }
+
+            .final-cta-layout {
+                display: grid;
+                gap: 1.5rem;
+                justify-items: center;
+                text-align: center;
+            }
+
+            .final-cta-copy {
+                display: grid;
+                justify-items: center;
+                gap: 0.9rem;
+                text-align: center;
+            }
+
+            .final-cta h2 {
+                margin: 0;
+                max-width: 15ch;
+                font-size: clamp(2rem, 4vw, 3rem);
+                line-height: 1.05;
+                letter-spacing: -0.05em;
+                margin-inline: auto;
+            }
+
+            .final-cta p {
+                max-width: 42rem;
+                margin: 0;
+                color: var(--text-secondary);
+                font-size: 1rem;
+                line-height: 1.75;
+                margin-inline: auto;
+            }
+
+            .final-cta-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.8rem;
+                justify-content: center;
             }
 
             footer {
                 font-size: 0.78rem;
-                color: #94a3b8;
+                color: var(--text-muted);
                 width: min(92vw, 1040px);
                 text-align: center;
-                margin: 0 auto;
-                padding: 0 1rem 1.5rem;
+                margin: 1.2rem auto 0;
+                padding: 3rem 1rem 2.8rem;
+                border-top: 1px solid rgba(148, 163, 184, 0.12);
             }
 
             .footer-links {
@@ -269,11 +752,11 @@
                 justify-content: center;
                 align-items: center;
                 flex-wrap: wrap;
-                gap: 0.35rem 0.65rem;
+                gap: 0.7rem 0.95rem;
             }
 
             .footer-links a {
-                color: #cbd5e1;
+                color: var(--text-secondary);
                 text-decoration: none;
                 opacity: 0.76;
                 white-space: nowrap;
@@ -283,11 +766,6 @@
             .footer-links a:hover {
                 opacity: 1;
                 text-decoration: underline;
-            }
-
-            .footer-copy {
-                margin-top: 6px;
-                opacity: 0.62;
             }
 
             .modal {
@@ -326,7 +804,7 @@
 
             .modal-subtitle {
                 margin: 0 0 1.2rem;
-                color: #94a3b8;
+                color: var(--text-muted);
                 font-size: 0.95rem;
             }
 
@@ -343,7 +821,7 @@
                 right: 1rem;
                 border: none;
                 background: transparent;
-                color: #94a3b8;
+                color: var(--text-muted);
                 font-size: 1.5rem;
                 line-height: 1;
                 cursor: pointer;
@@ -365,18 +843,9 @@
             }
 
             @media (max-width: 640px) {
-                .modal-content {
-                    padding: 1.5rem;
-                }
-
                 body {
                     overflow-x: hidden;
                     overflow-y: auto;
-                }
-
-                main {
-                    width: 100%;
-                    padding: 6.5rem 1rem 3rem;
                 }
 
                 .site-header {
@@ -397,24 +866,97 @@
                     font-size: 0.78rem;
                 }
 
-                .hero-card {
-                    padding: 2rem 1.1rem 2rem;
-                    border-radius: 24px;
+                main {
+                    width: 100%;
+                    padding: 6.5rem 1rem 3rem;
+                    gap: 3.2rem;
                 }
 
-                .engine-teaser-card {
-                    padding: 1.35rem 1rem;
-                    border-radius: 24px;
-                }
-
-                .hero-logo-frame {
-                    padding: 1rem;
-                    border-radius: 16px;
-                }
-
-                .engine-teaser-layout {
+                .solution-grid,
+                .problem-grid,
+                .demo-grid,
+                .metrics-grid,
+                .ecosystem-grid,
+                .trust-strip,
+                .final-cta-layout {
                     grid-template-columns: 1fr;
-                    justify-items: start;
+                }
+
+                .preview-tile,
+                .tile,
+                .trust-item,
+                .faq-item,
+                .final-cta {
+                    border-radius: 22px;
+                }
+
+                .tile,
+                .trust-item,
+                .final-cta {
+                    padding: 1.25rem;
+                }
+
+                .placeholder-surface {
+                    min-height: 280px;
+                    padding: 1.25rem;
+                    border-radius: 18px;
+                }
+
+                .preview-scene {
+                    grid-template-columns: 1fr;
+                    align-items: start;
+                }
+
+                .demo-placeholder {
+                    min-height: 180px;
+                    border-radius: 18px;
+                }
+
+                .section-head {
+                    margin-bottom: 1.5rem;
+                }
+
+                .faq-item summary {
+                    padding: 1rem 1.15rem;
+                }
+
+                .faq-answer {
+                    padding: 0 1.15rem 1.1rem;
+                }
+
+                .final-cta-actions {
+                    justify-content: flex-start;
+                }
+            }
+
+            @media (min-width: 641px) and (max-width: 980px) {
+                .solution-grid,
+                .final-cta-layout {
+                    grid-template-columns: 1fr;
+                }
+
+                .problem-grid,
+                .demo-grid,
+                .metrics-grid,
+                .ecosystem-grid,
+                .trust-strip {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+
+                .final-cta-actions {
+                    justify-content: flex-start;
+                }
+
+                .preview-scene {
+                    grid-template-columns: 1fr;
+                    align-items: start;
+                }
+            }
+
+            @media (min-width: 981px) and (max-width: 1180px) {
+                .demo-grid,
+                .metrics-grid {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
                 }
             }
         </style>
@@ -423,113 +965,366 @@
         <header class="site-header" aria-label="Primary navigation">
             <a class="site-brand" href="index.html" aria-label="Roadscript home">
                 <span class="site-brand-mark">
-                    <img src="assets/brand/favicon.svg" alt="" aria-hidden="true">
+                    <img src="assets/brand/favicon.svg" alt="" aria-hidden="true" />
                 </span>
                 Roadscript
             </a>
             <nav class="site-nav">
-                <a href="#about" id="aboutLink">About</a>
+                <a href="index.html" aria-current="page">Home</a>
+                <a href="problem.html">Problem</a>
+                <a href="solution.html">Solution</a>
+                <a href="demo.html">Try Demo</a>
                 <a href="roadmap.html">Roadmap</a>
                 <a href="whitepaper.html">Whitepaper</a>
-                <a href="demo.html">Engine</a>
+                <a href="#about" id="aboutLink">About</a>
             </nav>
         </header>
+
         <main>
-            <section class="hero-card" aria-label="Roadscript introduction">
-                <div class="hero-logo-frame">
-                    <img src="assets/brand/wordmark.svg" alt="Roadscript Wordmark">
+            <section class="landing-section hero" aria-labelledby="heroTitle">
+                <div class="hero-copy">
+                    <span class="eyebrow">Official Public Preview</span>
+                    <h1 id="heroTitle">Invisible authenticity infrastructure for digital media.</h1>
+                    <p>
+                        Roadscript embeds invisible authenticity signals directly into media content. Cyphra helps users
+                        verify whether media still carries a valid Roadscript authenticity signal.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="button-link is-primary" href="demo.html">Try Demo</a>
+                        <a class="button-link is-secondary" href="whitepaper.html">Read Docs</a>
+                        <a class="button-link is-secondary" href="whitepaper.html">Whitepaper</a>
+                        <a class="button-link is-secondary" href="https://github.com/Roadscript-Studio" target="_blank" rel="noopener">GitHub</a>
+                    </div>
+                    <div class="hero-note" id="previewNote">
+                        Public preview note: packaged downloads are still on the roadmap. Today&apos;s public surface
+                        focuses on the landing experience, interactive demo, and local-first verification direction.
+                    </div>
                 </div>
-                <h1>Roadscript</h1>
-            <p>
-                Invisible watermarking for image authenticity.<br />
-                Building verifiable identity systems for digital works.
-            </p>
-            </section>
-            <section class="engine-teaser" aria-labelledby="engineTeaserTitle">
-                <div class="engine-teaser-card">
-                    <div class="engine-teaser-layout">
-                        <div class="engine-teaser-copy">
-                            <span class="engine-teaser-eyebrow">Engine Demo</span>
-                            <h2 id="engineTeaserTitle">Invisible watermark verification for real media workflows.</h2>
-                            <p>
-                                Explore a focused preview of Roadscript watermarking with curated sample images,
-                                extraction results, and verification metrics on a dedicated demo page.
-                            </p>
+                <div class="hero-stage" aria-label="Product preview placeholder">
+                    <div class="preview-tile">
+                        <div class="preview-topbar">
+                            <div class="preview-dots" aria-hidden="true">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="preview-title">Cyphra verification preview</div>
                         </div>
-                        <a class="engine-teaser-link" href="demo.html">Open demo</a>
+                        <div class="preview-body">
+                            <div class="placeholder-surface">
+                                <div class="preview-scene">
+                                    <div class="preview-copy">
+                                        <span class="placeholder-badge">GIF / WebM Placeholder</span>
+                                        <h2>Product preview / verification animation placeholder</h2>
+                                        <p>
+                                            Reserve this area for a future Roadscript verification walkthrough showing
+                                            media entering Cyphra, authenticity being checked, and the verification
+                                            result surfaced in a clear product flow.
+                                        </p>
+                                    </div>
+                                    <div class="preview-stack" aria-hidden="true">
+                                        <div class="preview-mini">
+                                            <strong>Input media</strong>
+                                            Roadscript-authenticated image selected for verification.
+                                        </div>
+                                        <div class="preview-mini">
+                                            <strong>Status signal</strong>
+                                            Cyphra checks for a valid embedded authenticity signal.
+                                        </div>
+                                        <div class="preview-mini">
+                                            <strong>Verification result</strong>
+                                            Placeholder area for future animated status, payload, or trust output.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-caption">
+                                Future screenshot, product animation, or short verification clip for the official public landing page.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="landing-section" aria-labelledby="trustTitle">
+                <h2 id="trustTitle" class="sr-only">Roadscript trust signals</h2>
+                <div class="trust-strip">
+                    <div class="trust-item">
+                        <strong>Content-layer signal</strong>
+                        <span>Designed to travel with the media rather than depend only on surrounding metadata.</span>
+                    </div>
+                    <div class="trust-item">
+                        <strong>Local-first verification</strong>
+                        <span>The roadmap prioritizes verification workflows that do not require unnecessary uploads.</span>
+                    </div>
+                    <div class="trust-item">
+                        <strong>Honest roadmap</strong>
+                        <span>This site and demo are public previews of a larger engineering and product direction.</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="landing-section" aria-labelledby="problemTitle">
+                <div class="section-head">
+                    <span class="eyebrow">Why this matters</span>
+                    <h2 id="problemTitle">Why metadata-only provenance breaks down.</h2>
+                    <p>
+                        Roadscript focuses on content-layer authenticity because screenshots, reposts, edits, and normal
+                        platform handling do not preserve fragile file-level provenance by default.
+                    </p>
+                </div>
+                <div class="tile-grid problem-grid">
+                    <article class="tile">
+                        <h3>Metadata can be stripped</h3>
+                        <p>File-level context can disappear during export, compression, reposting, and platform processing.</p>
+                    </article>
+                    <article class="tile">
+                        <h3>Screenshots break provenance</h3>
+                        <p>Screen-captured or transformed copies make it harder to rely on external provenance alone.</p>
+                    </article>
+                    <article class="tile">
+                        <h3>AI-generated and edited media is harder to verify</h3>
+                        <p>Audiences increasingly need clearer ways to evaluate authenticity beyond source claims or visual intuition.</p>
+                    </article>
+                    <article class="tile">
+                        <h3>Media needs authenticity at the content layer</h3>
+                        <p>Creators, platforms, and users need signals designed to travel with the media itself.</p>
+                    </article>
+                </div>
+                <div class="section-actions">
+                    <a class="button-link is-secondary" href="problem.html">Explore the problem</a>
+                </div>
+            </section>
+
+            <section class="landing-section" aria-labelledby="solutionTitle">
+                <div class="section-head">
+                    <span class="eyebrow">Roadscript + Cyphra</span>
+                    <h2 id="solutionTitle">From invisible authenticity signals to readable verification.</h2>
+                    <p>
+                        Roadscript is the content-layer system. Cyphra is the user-facing verification experience
+                        designed to make authenticity checks easier to interpret and eventually easier to integrate.
+                    </p>
+                </div>
+                <div class="tile-grid solution-grid">
+                    <article class="tile solution-tile">
+                        <span class="tile-label">Roadscript Engine</span>
+                        <h3>Embed and verify authenticity signals inside the media layer.</h3>
+                        <p>The core system is being built around robust embedding, decode, and verification workflows.</p>
+                    </article>
+                    <article class="tile solution-tile is-accent">
+                        <span class="tile-label">Cyphra App</span>
+                        <h3>Translate verification results into a product experience people can actually use.</h3>
+                        <p>Cyphra is the user-facing layer for checking whether media still carries a valid Roadscript signal.</p>
+                    </article>
+                </div>
+                <div class="section-actions">
+                    <a class="button-link is-secondary" href="solution.html">View solution</a>
+                </div>
+            </section>
+
+            <section class="landing-section" aria-labelledby="demoTitle">
+                <div class="section-head">
+                    <span class="eyebrow">Visual Demo</span>
+                    <h2 id="demoTitle">See Roadscript in action.</h2>
+                    <p>
+                        These tiles are placeholders for future GIF or WebM loops that will show Roadscript and Cyphra
+                        behavior more directly.
+                    </p>
+                </div>
+                <div class="tile-grid demo-grid">
+                    <article class="tile">
+                        <div class="demo-card-header">
+                            <h3>Verify watermark</h3>
+                            <span class="status-badge">Coming soon</span>
+                        </div>
+                        <p>Show Cyphra checking whether media still carries a valid Roadscript authenticity signal.</p>
+                        <div class="demo-placeholder">GIF/WebM placeholder: verifying media in Cyphra</div>
+                    </article>
+                    <article class="tile">
+                        <div class="demo-card-header">
+                            <h3>Screenshot survival</h3>
+                            <span class="status-badge">Coming soon</span>
+                        </div>
+                        <p>Demonstrate robustness goals around screenshot-style transformations and downstream sharing.</p>
+                        <div class="demo-placeholder">GIF/WebM placeholder: verification after screenshot-style transformation</div>
+                    </article>
+                    <article class="tile">
+                        <div class="demo-card-header">
+                            <h3>Tamper detection</h3>
+                            <span class="status-badge">Coming soon</span>
+                        </div>
+                        <p>Preview how edited media could fail verification or return a changed authenticity result.</p>
+                        <div class="demo-placeholder">GIF/WebM placeholder: edited media fails or changes verification result</div>
+                    </article>
+                </div>
+                <div class="section-actions">
+                    <a class="button-link is-secondary" href="demo.html">Try the demo</a>
+                </div>
+            </section>
+
+            <section class="landing-section" aria-labelledby="signalsTitle">
+                <div class="section-head">
+                    <span class="eyebrow">Engineering credibility</span>
+                    <h2 id="signalsTitle">Engineering signals for a real system.</h2>
+                    <p>
+                        The deeper technical detail belongs in the whitepaper and solution pages. The homepage only keeps
+                        the signals that help visitors understand Roadscript as a real engineering effort.
+                    </p>
+                </div>
+                <div class="tile-grid metrics-grid">
+                    <article class="tile">
+                        <div class="metric-value">128-bit payload</div>
+                        <div class="metric-detail">Structured payload design for authenticity-oriented workflows.</div>
+                    </article>
+                    <article class="tile">
+                        <div class="metric-value">CRC-protected verification</div>
+                        <div class="metric-detail">Integrity-aware verification rather than loose visual checking alone.</div>
+                    </article>
+                    <article class="tile">
+                        <div class="metric-value">Modern C++ engine</div>
+                        <div class="metric-detail">Performance-oriented native core with decode and verification ambitions.</div>
+                    </article>
+                    <article class="tile">
+                        <div class="metric-value">Local-first processing</div>
+                        <div class="metric-detail">Verification direction centered on minimizing unnecessary media uploads.</div>
+                    </article>
+                    <article class="tile">
+                        <div class="metric-value">Sub-second verification target</div>
+                        <div class="metric-detail">A product goal for responsive checks as benchmarks and packaging mature.</div>
+                    </article>
+                </div>
+                <div class="section-actions">
+                    <a class="button-link is-secondary" href="whitepaper.html">Read technical overview</a>
+                </div>
+            </section>
+
+            <section class="landing-section" aria-labelledby="ecosystemTitle">
+                <div class="section-head">
+                    <span class="eyebrow">Roadscript ecosystem</span>
+                    <h2 id="ecosystemTitle">The product family around Roadscript.</h2>
+                    <p>
+                        The homepage should invite people deeper into the ecosystem, not try to explain every surface in
+                        full on first load.
+                    </p>
+                </div>
+                <div class="tile-grid ecosystem-grid">
+                    <article class="tile ecosystem-tile is-accent">
+                        <h3>Roadscript Engine</h3>
+                        <p>Core watermarking and verification engine.</p>
+                    </article>
+                    <article class="tile ecosystem-tile is-accent">
+                        <h3>Cyphra App</h3>
+                        <p>User-facing authenticity verification experience.</p>
+                    </article>
+                    <article class="tile ecosystem-tile">
+                        <h3>Roadscript CLI</h3>
+                        <p>Developer and power-user command-line workflow.</p>
+                    </article>
+                    <article class="tile ecosystem-tile">
+                        <h3>SDKs</h3>
+                        <p>Future integration layer for apps, services, and creator tools.</p>
+                    </article>
+                    <article class="tile ecosystem-tile">
+                        <h3>Docs</h3>
+                        <p>Technical documentation, architecture notes, and usage guides.</p>
+                        <a class="tile-link" href="whitepaper.html">Read docs</a>
+                    </article>
+                    <article class="tile ecosystem-tile">
+                        <h3>Website Demo</h3>
+                        <p>Public interactive demo and product explanation.</p>
+                        <a class="tile-link" href="demo.html">Open demo</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="landing-section" aria-labelledby="faqTitle">
+                <div class="section-head">
+                    <span class="eyebrow">FAQ</span>
+                    <h2 id="faqTitle">Key questions, answered briefly.</h2>
+                </div>
+                <div class="faq-list">
+                    <details class="faq-item">
+                        <summary>What is Cyphra?</summary>
+                        <div class="faq-answer">Cyphra is the user-facing app for verifying Roadscript-authenticated media. It is designed to make authenticity checks simple for creators, users, and developers.</div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>How is Roadscript different from metadata?</summary>
+                        <div class="faq-answer">Metadata lives beside the file and can often be stripped, edited, or lost. Roadscript focuses on content-layer authenticity signals that are embedded directly into the media itself.</div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Does it survive screenshots?</summary>
+                        <div class="faq-answer">Screenshot survival is one of the key robustness goals. The Roadscript engine is being designed and tested around transformations such as screenshots, recompression, and resizing.</div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Are images uploaded to a server?</summary>
+                        <div class="faq-answer">The roadmap prioritizes local-first processing where possible. Verification should not require unnecessary media uploads unless a future cloud feature explicitly needs it.</div>
+                    </details>
+                </div>
+                <div class="section-actions">
+                    <a class="button-link is-secondary" href="whitepaper.html">Read more context</a>
+                    <a class="button-link is-secondary" href="roadmap.html">See roadmap</a>
+                </div>
+            </section>
+
+            <section class="landing-section final-cta" aria-labelledby="ctaTitle">
+                <div class="final-cta-layout">
+                    <div class="final-cta-copy">
+                        <span class="eyebrow">Next step</span>
+                        <h2 id="ctaTitle">Try the verification workflow, then keep exploring.</h2>
+                        <p>
+                            The current demo is a guided public preview built to communicate the Roadscript direction
+                            with sample media and verification-oriented product states. Use it as the main interactive
+                            entry point, then continue into docs, roadmap, or GitHub.
+                        </p>
+                    </div>
+                    <div class="final-cta-actions">
+                        <a class="button-link is-primary" href="demo.html">Try Demo</a>
+                        <a class="button-link is-secondary" href="whitepaper.html">Read Docs</a>
+                        <a class="button-link is-secondary" href="https://github.com/Roadscript-Studio" target="_blank" rel="noopener">View GitHub</a>
                     </div>
                 </div>
             </section>
         </main>
+
         <div id="aboutModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="aboutTitle">
             <div class="modal-content">
                 <button class="modal-close" id="aboutClose" type="button" aria-label="Close About dialog">&times;</button>
                 <h2 id="aboutTitle">About Roadscript</h2>
-                <p class="modal-subtitle">Engineering systems for authenticity and trust.</p>
+                <p class="modal-subtitle">Engineering authenticity infrastructure with a user-facing verification layer.</p>
                 <p>
-                    Roadscript is an independent product and engineering initiative focused on invisible watermarking
-                    for image authenticity. The project combines local-first engine design, verification-oriented
-                    workflows, and practical product surfaces for creators, operators, and downstream tools. The
-                    current website and demo communicate the direction of the system while backend execution, upload
-                    handling, and packaged releases continue to mature.
+                    Roadscript is an independent media authenticity initiative focused on embedding invisible signals
+                    directly into content. Cyphra is the user-facing verification product layer designed to help people
+                    interpret whether Roadscript-authenticated media still carries a valid signal. The current website
+                    and demo are public previews intended to communicate the roadmap, product direction, and engineering
+                    priorities while packaged releases and deeper integrations continue to mature.
                 </p>
             </div>
         </div>
+
         <footer>
             <div class="footer-links">
-                <a
-                    href="https://youtube.com/@roadscript0923?si=9QFidjcyGVrqMrV9"
-                    target="_blank"
-                    rel="noopener"
-                    >YouTube</a
-                >
+                <a href="https://youtube.com/@roadscript0923?si=9QFidjcyGVrqMrV9" target="_blank" rel="noopener">YouTube</a>
                 ·
-                <a
-                    href="https://www.tiktok.com/@_roadscript?_r=1&_t=ZS-9412rQs6c9V"
-                    target="_blank"
-                    rel="noopener"
-                    >TikTok</a
-                >
+                <a href="https://www.tiktok.com/@_roadscript?_r=1&_t=ZS-9412rQs6c9V" target="_blank" rel="noopener">TikTok</a>
                 ·
-                <a
-                    href="https://xhslink.com/m/9elnBCeCVnW"
-                    target="_blank"
-                    rel="noopener"
-                    >rednote</a
-                >
+                <a href="https://xhslink.com/m/9elnBCeCVnW" target="_blank" rel="noopener">rednote</a>
                 ·
-                <a
-                    href="https://b23.tv/IkRxi2q" target="_blank" rel="noopener"
-                    >BiliBili</a
-                >
+                <a href="https://b23.tv/IkRxi2q" target="_blank" rel="noopener">BiliBili</a>
                 ·
-                <a
-                    href="https://v.douyin.com/645u6oXgdLg/"
-                    target="_blank"
-                    rel="noopener"
-                    >Douyin</a
-                >
+                <a href="https://v.douyin.com/645u6oXgdLg/" target="_blank" rel="noopener">Douyin</a>
                 ·
-                <a
-                    href="https://www.instagram.com/_roadscript?igsh=MWs4dGZzd2w1MXV1Nw%3D%3D&utm_source=qr"
-                    target="_blank"
-                    rel="noopener"
-                    >Instagram</a
-                >
+                <a href="https://www.instagram.com/_roadscript?igsh=MWs4dGZzd2w1MXV1Nw%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a>
                 ·
-                <a
-                    href="https://pin.it/38tTEXJWl"
-                    target="_blank"
-                    rel="noopener"
-                    >Pinterest</a
-                >
+                <a href="https://pin.it/38tTEXJWl" target="_blank" rel="noopener">Pinterest</a>
             </div>
             <div class="footer-links">
                 © 2026 Roadscript. All rights reserved.
-                <a href="mailto:contact@roadscript.studio">Email</a> ·
+                <a href="mailto:contact@roadscript.studio">Email</a>
+                ·
                 <a href="https://github.com/Roadscript-Studio">GitHub</a>
             </div>
         </footer>
+
         <script>
             const aboutLink = document.getElementById("aboutLink");
             const aboutModal = document.getElementById("aboutModal");

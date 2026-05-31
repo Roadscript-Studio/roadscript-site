@@ -2,8 +2,12 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Roadscript - Whitepaper</title>
+        <title>Roadscript - Problem</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Why Roadscript focuses on content-layer authenticity: metadata can be stripped, screenshots break provenance, and creators need verification that stays with the media."
+        />
         <link rel="icon" href="assets/brand/favicon.svg" />
         <link rel="apple-touch-icon" href="assets/brand/favicon.svg" />
         <style>
@@ -12,16 +16,19 @@
                 --bg-secondary: #0f172a;
                 --bg-elevated: rgba(15, 23, 42, 0.62);
                 --bg-tile: rgba(6, 12, 26, 0.72);
-                --border-soft: rgba(148, 163, 184, 0.16);
+                --border-soft: rgba(148, 163, 184, 0.18);
                 --text-primary: #f8fafc;
                 --text-secondary: #cbd5e1;
                 --text-muted: #94a3b8;
+                --accent: #38bdf8;
+                --accent-soft: rgba(56, 189, 248, 0.08);
                 --accent-strong: #7dd3fc;
-                --accent-soft: rgba(56, 189, 248, 0.12);
-                --shadow-heavy: 0 28px 90px rgba(0, 0, 0, 0.34);
+                --shadow-heavy: 0 28px 90px rgba(0, 0, 0, 0.36);
             }
 
-            * { box-sizing: border-box; }
+            * {
+                box-sizing: border-box;
+            }
 
             body {
                 margin: 0;
@@ -29,9 +36,9 @@
                 font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
                 color-scheme: dark;
                 background:
-                    radial-gradient(circle at 50% 5%, rgba(56, 189, 248, 0.18), transparent 36rem),
-                    radial-gradient(circle at 12% 18%, rgba(59, 130, 246, 0.12), transparent 28rem),
-                    linear-gradient(135deg, #020617 0%, #0b1328 52%, #111827 100%);
+                    radial-gradient(circle at 50% 8%, rgba(56, 189, 248, 0.16), transparent 34rem),
+                    radial-gradient(circle at 12% 20%, rgba(59, 130, 246, 0.12), transparent 26rem),
+                    linear-gradient(135deg, #020617 0%, #0f172a 54%, #111827 100%);
                 color: var(--text-primary);
                 overflow-x: hidden;
                 overflow-y: auto;
@@ -43,8 +50,8 @@
                 inset: 0;
                 pointer-events: none;
                 background-image:
-                    linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
+                    linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
                 background-size: 72px 72px;
                 mask-image: radial-gradient(circle at center, black, transparent 72%);
             }
@@ -56,7 +63,7 @@
                 padding: 8.8rem 2rem 5.75rem;
                 display: flex;
                 flex-direction: column;
-                gap: 3.2rem;
+                gap: 3rem;
             }
 
             .site-header {
@@ -99,7 +106,10 @@
                 box-shadow: 0 8px 26px rgba(0, 0, 0, 0.25);
             }
 
-            .site-brand-mark img { width: 18px; height: 18px; }
+            .site-brand-mark img {
+                width: 18px;
+                height: 18px;
+            }
 
             .site-nav {
                 display: flex;
@@ -119,21 +129,20 @@
                 transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
             }
 
-            .site-nav a:hover, .site-nav a[aria-current="page"] {
+            .site-nav a:hover,
+            .site-nav a[aria-current="page"] {
                 color: white;
                 border-color: rgba(56, 189, 248, 0.45);
                 background: rgba(56, 189, 248, 0.1);
             }
 
-            .page-hero {
-                display: grid;
-                justify-items: center;
-                gap: 1rem;
-                padding: 0.65rem 0 0;
-                text-align: center;
+            .page-card,
+            .content-section {
+                position: relative;
+                text-align: left;
             }
 
-            .content-card {
+            .page-card {
                 position: relative;
                 border: 1px solid var(--border-soft);
                 border-radius: 28px;
@@ -146,9 +155,18 @@
                     0 22px 60px rgba(0, 0, 0, 0.18);
             }
 
-            .content-card { padding: 1.55rem; }
+            .page-card {
+                padding: 2rem;
+                display: grid;
+                justify-items: center;
+            }
 
-            .eyebrow, .section-label {
+            .content-section {
+                padding: 0;
+            }
+
+            .eyebrow,
+            .section-label {
                 display: inline-flex;
                 align-items: center;
                 padding: 0.38rem 0.72rem;
@@ -157,48 +175,112 @@
                 background: var(--accent-soft);
                 color: var(--accent-strong);
                 font-size: 0.78rem;
-                font-weight: 700;
+                font-weight: 600;
                 letter-spacing: 0.12em;
                 text-transform: uppercase;
             }
 
-            .page-hero h1 {
-                margin: 0;
-                max-width: 15ch;
-                font-size: clamp(2.6rem, 5.4vw, 4.4rem);
-                line-height: 1.04;
+            .page-card h1 {
+                margin: 1rem auto 0;
+                max-width: 17ch;
+                font-size: clamp(2.8rem, 6vw, 4.8rem);
+                line-height: 1.02;
                 letter-spacing: -0.06em;
-                text-wrap: balance;
                 color: var(--text-primary);
+                text-wrap: balance;
             }
 
-            .page-hero p, .content-card p, .content-card li {
+            .page-card p,
+            .content-section p {
+                margin: 1rem 0 0;
+                max-width: 46rem;
                 color: var(--text-secondary);
-                line-height: 1.74;
+                line-height: 1.75;
                 font-size: 1rem;
             }
 
-            .page-hero p { max-width: 45rem; margin: 0; }
+            .page-card {
+                text-align: center;
+            }
 
-            .hero-actions {
+            .page-card p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .section-heading {
+                display: grid;
+                justify-items: center;
+                text-align: center;
+                gap: 0.8rem;
+                margin: 0 auto 1.9rem;
+                max-width: 46rem;
+            }
+
+            .section-heading h2 {
+                margin: 0;
+                max-width: 22ch;
+                font-size: clamp(1.9rem, 4vw, 2.9rem);
+                line-height: 1.08;
+                letter-spacing: -0.05em;
+                text-wrap: balance;
+            }
+
+            .card-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1.2rem;
+            }
+
+            .detail-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1.2rem;
+            }
+
+            .info-card {
+                padding: 1.55rem;
+                border: 1px solid rgba(148, 163, 184, 0.16);
+                border-radius: 24px;
+                background: rgba(2, 6, 23, 0.46);
+                box-shadow:
+                    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+                    0 18px 40px rgba(0, 0, 0, 0.14);
+            }
+
+            .info-card h3 {
+                margin: 0;
+                font-size: 1.12rem;
+                line-height: 1.28;
+                letter-spacing: -0.03em;
+            }
+
+            .info-card p {
+                margin: 0.78rem 0 0;
+                font-size: 0.97rem;
+                line-height: 1.72;
+            }
+
+            .action-row {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 0.85rem;
+                margin-top: 1.5rem;
             }
 
             .button-link {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                min-height: 50px;
-                padding: 0.86rem 1.24rem;
+                min-height: 52px;
+                padding: 0.9rem 1.25rem;
                 border: 1px solid transparent;
                 border-radius: 999px;
                 color: var(--text-primary);
-                font-size: 0.94rem;
-                font-weight: 700;
                 text-decoration: none;
+                font-size: 0.95rem;
+                font-weight: 700;
                 transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
             }
 
@@ -208,13 +290,13 @@
 
             .button-link.is-primary {
                 border-color: rgba(56, 189, 248, 0.5);
-                background: linear-gradient(135deg, rgba(14, 165, 233, 0.3), rgba(59, 130, 246, 0.18));
+                background: linear-gradient(135deg, rgba(14, 165, 233, 0.28), rgba(59, 130, 246, 0.16));
                 box-shadow: 0 18px 42px rgba(14, 165, 233, 0.14);
             }
 
             .button-link.is-secondary {
                 border-color: rgba(148, 163, 184, 0.28);
-                background: rgba(15, 23, 42, 0.42);
+                background: rgba(15, 23, 42, 0.46);
             }
 
             .button-link.is-secondary:hover {
@@ -222,67 +304,12 @@
                 background: rgba(56, 189, 248, 0.1);
             }
 
-            .section-heading {
-                display: grid;
-                justify-items: center;
-                gap: 0.8rem;
-                margin: 0 auto 1.55rem;
-                text-align: center;
-                max-width: 46rem;
-            }
-
-            .section-heading h2 {
-                margin: 0;
-                max-width: 21ch;
-                font-size: clamp(1.9rem, 4vw, 2.8rem);
-                line-height: 1.08;
-                letter-spacing: -0.05em;
-                text-wrap: balance;
-            }
-
-            .section-heading p {
-                margin: 0;
-                color: var(--text-secondary);
-                line-height: 1.72;
-            }
-
-            .content-grid {
-                display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 1.35rem;
-            }
-
-            .content-card h2 {
-                margin: 0.9rem 0 0;
-                color: var(--text-primary);
-                font-size: 1.28rem;
-                line-height: 1.22;
-                letter-spacing: -0.03em;
-            }
-
-            .content-card ul {
-                margin: 1rem 0 0;
-                padding-left: 1.1rem;
-            }
-
-            .content-card li + li { margin-top: 0.5rem; }
-
-            .reading-grid {
-                display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 1.35rem;
-            }
-
-            .reading-card {
-                min-height: 100%;
-            }
-
             footer {
                 font-size: 0.78rem;
                 color: var(--text-muted);
                 width: min(92vw, 1040px);
                 text-align: center;
-                margin: 1.75rem auto 0;
+                margin: 1.2rem auto 0;
                 padding: 3rem 1rem 2.8rem;
                 border-top: 1px solid rgba(148, 163, 184, 0.12);
             }
@@ -300,9 +327,14 @@
                 text-decoration: none;
                 opacity: 0.76;
                 white-space: nowrap;
+                transition: opacity 0.2s ease, color 0.2s ease;
             }
 
-            .footer-links a:hover { opacity: 1; text-decoration: underline; }
+            .footer-links a:hover {
+                opacity: 1;
+                text-decoration: underline;
+            }
+
             .modal {
                 display: none;
                 position: fixed;
@@ -314,7 +346,11 @@
                 justify-content: center;
                 padding: 1.5rem;
             }
-            .modal.is-open { display: flex; }
+
+            .modal.is-open {
+                display: flex;
+            }
+
             .modal-content {
                 position: relative;
                 max-width: 560px;
@@ -326,28 +362,86 @@
                 box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
                 text-align: left;
             }
-            .modal-content h2 { margin: 0 0 0.35rem; font-size: 1.6rem; }
-            .modal-subtitle { margin: 0 0 1.2rem; color: #94a3b8; font-size: 0.95rem; }
-            .modal-content p { margin: 0; font-size: 1rem; line-height: 1.7; opacity: 0.88; }
-            .modal-close {
-                position: absolute; top: 1rem; right: 1rem; border: none; background: transparent;
-                color: #94a3b8; font-size: 1.5rem; line-height: 1; cursor: pointer;
+
+            .modal-content h2 {
+                margin: 0 0 0.35rem;
+                font-size: 1.6rem;
             }
-            .modal-close:hover { color: white; }
+
+            .modal-subtitle {
+                margin: 0 0 1.2rem;
+                color: var(--text-muted);
+                font-size: 0.95rem;
+            }
+
+            .modal-content p {
+                margin: 0;
+                font-size: 1rem;
+                line-height: 1.7;
+                opacity: 0.88;
+            }
+
+            .modal-close {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                border: none;
+                background: transparent;
+                color: var(--text-muted);
+                font-size: 1.5rem;
+                line-height: 1;
+                cursor: pointer;
+            }
+
+            .modal-close:hover {
+                color: white;
+            }
+
             @media (max-width: 640px) {
-                .modal-content { padding: 1.5rem; }
-                main { width: 100%; padding: 6.5rem 1rem 3rem; gap: 1.6rem; }
-                .site-header {
-                    top: 12px; width: calc(100% - 24px); align-items: flex-start;
-                    border-radius: 24px; padding: 0.85rem; gap: 0.75rem;
+                main {
+                    width: 100%;
+                    padding: 6.5rem 1rem 3rem;
                 }
-                .site-nav { gap: 0.25rem; }
-                .site-nav a { padding: 0.48rem 0.62rem; font-size: 0.78rem; }
-                .page-hero h1 { font-size: clamp(2.2rem, 10vw, 3.4rem); }
-                .page-hero p { max-width: 100%; }
-                .content-card { border-radius: 24px; padding: 1.35rem 1rem; }
-                .content-grid,
-                .reading-grid { grid-template-columns: 1fr; }
+
+                .site-header {
+                    top: 12px;
+                    width: calc(100% - 24px);
+                    align-items: flex-start;
+                    border-radius: 24px;
+                    padding: 0.85rem;
+                    gap: 0.75rem;
+                }
+
+                .site-nav {
+                    gap: 0.25rem;
+                }
+
+                .site-nav a {
+                    padding: 0.48rem 0.62rem;
+                    font-size: 0.78rem;
+                }
+
+                .page-card,
+                .content-section,
+                .modal-content {
+                    border-radius: 24px;
+                    padding: 1.4rem 1rem;
+                }
+
+                .card-grid,
+                .detail-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            @media (min-width: 641px) and (max-width: 980px) {
+                .card-grid {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+
+                .detail-grid {
+                    grid-template-columns: 1fr;
+                }
             }
         </style>
     </head>
@@ -355,80 +449,97 @@
         <header class="site-header" aria-label="Primary navigation">
             <a class="site-brand" href="index.html" aria-label="Roadscript home">
                 <span class="site-brand-mark">
-                    <img src="assets/brand/favicon.svg" alt="" aria-hidden="true">
+                    <img src="assets/brand/favicon.svg" alt="" aria-hidden="true" />
                 </span>
                 Roadscript
             </a>
             <nav class="site-nav">
                 <a href="index.html">Home</a>
-                <a href="problem.html">Problem</a>
+                <a href="problem.html" aria-current="page">Problem</a>
                 <a href="solution.html">Solution</a>
                 <a href="demo.html">Try Demo</a>
                 <a href="roadmap.html">Roadmap</a>
-                <a href="whitepaper.html" aria-current="page">Whitepaper</a>
+                <a href="whitepaper.html">Whitepaper</a>
                 <a href="#about" id="aboutLink">About</a>
             </nav>
         </header>
         <main>
-            <section class="page-hero" aria-labelledby="whitepaperTitle">
-                <span class="eyebrow">Whitepaper</span>
-                <h1 id="whitepaperTitle">Product thesis and technical direction for Roadscript.</h1>
+            <section class="page-card" aria-labelledby="problemTitle">
+                <span class="eyebrow">Problem</span>
+                <h1 id="problemTitle">Trust breaks down when authenticity lives beside the media.</h1>
                 <p>
-                    Roadscript is grounded in a simple idea: image authenticity should be verifiable without making
-                    the media unusable. The current whitepaper page captures the working direction behind the engine,
-                    product surface, and verification workflow while the deeper technical paper continues to mature.
+                    Roadscript starts from a practical observation: content moves through screenshots, reposts,
+                    recompression, edits, and platform pipelines that do not preserve metadata perfectly. That makes it
+                    harder for creators, platforms, and everyday users to reason about whether an image still carries a
+                    trustworthy authenticity signal.
                 </p>
-                <div class="hero-actions">
-                    <a class="button-link is-primary" href="demo.html">Try Demo</a>
-                    <a class="button-link is-secondary" href="roadmap.html">View Roadmap</a>
+                <div class="action-row">
+                    <a class="button-link is-primary" href="solution.html">View the solution</a>
+                    <a class="button-link is-secondary" href="whitepaper.html">Read whitepaper</a>
                 </div>
             </section>
-            <section aria-labelledby="thesisTitle">
+
+            <section class="content-section" aria-labelledby="coreChallengesTitle">
                 <div class="section-heading">
-                    <span class="section-label">Working thesis</span>
-                    <h2 id="thesisTitle">Authenticity becomes more useful when verification survives ordinary media handling.</h2>
+                    <span class="section-label">Core challenges</span>
+                    <h2 id="coreChallengesTitle">A few predictable sharing patterns are enough to break fragile provenance.</h2>
                     <p>
-                        This page is a public product thesis rather than a finished research paper. It keeps the core
-                        direction readable while deeper technical detail continues to mature.
+                        The current media environment does not need malicious actors to create ambiguity. Normal sharing
+                        behavior can be enough to disconnect content from the context that originally described it.
                     </p>
                 </div>
-                <div class="reading-grid" aria-label="Roadscript whitepaper themes">
-                <article class="content-card reading-card">
-                    <span class="section-label">Problem</span>
-                    <h2>Authenticity needs operational proof</h2>
-                    <p>
-                        Provenance claims become more useful when creators, operators, and downstream tools can verify
-                        them through a repeatable system rather than through screenshots or trust alone.
-                    </p>
-                </article>
-                <article class="content-card reading-card">
-                    <span class="section-label">Approach</span>
-                    <h2>Invisible watermarking with measurable verification</h2>
-                    <p>
-                        The engine direction emphasizes transform-domain watermarking, clear verification signals,
-                        payload recovery, and practical quality constraints suitable for real image workflows.
-                    </p>
-                </article>
+                <div class="card-grid">
+                    <article class="info-card">
+                        <h3>Metadata can be stripped</h3>
+                        <p>Exports, reposts, platform transforms, and conversions can remove the file-level context around an image.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>Screenshots break provenance</h3>
+                        <p>Once content is re-captured as pixels, external labels and attached metadata often stop telling the whole story.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>Edited and AI-generated media is harder to verify</h3>
+                        <p>Audiences increasingly need ways to evaluate authenticity without relying only on source claims or visual intuition.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>Users need content-layer authenticity</h3>
+                        <p>Creators, platforms, and users need signals designed to travel with the media itself across real workflows.</p>
+                    </article>
                 </div>
             </section>
-            <section class="content-grid" aria-label="Roadscript whitepaper direction">
-                <article class="content-card">
-                    <span class="section-label">Product direction</span>
-                    <h2>Local-first verification surface</h2>
-                    <ul>
-                        <li>Sample-based demo today</li>
-                        <li>Backend execution next</li>
-                        <li>CLI and app packaging after engine stabilization</li>
-                    </ul>
-                </article>
-                <article class="content-card">
-                    <span class="section-label">Current status</span>
-                    <h2>Working paper, active engineering</h2>
+
+            <section class="content-section" aria-labelledby="whyNowTitle">
+                <div class="section-heading">
+                    <span class="section-label">Why it matters</span>
+                    <h2 id="whyNowTitle">This is a usability problem as much as a technical one.</h2>
                     <p>
-                        This website does not present a finished research publication. It presents the current product
-                        thesis and the verification workflow that the Roadscript engine is being built to support.
+                        Even when provenance tooling exists, the experience often breaks down when media leaves the
+                        original environment. Roadscript is aimed at a future where authenticity can still be checked in
+                        simpler, more resilient ways after content has already started moving.
                     </p>
-                </article>
+                </div>
+                <div class="detail-grid">
+                    <article class="info-card">
+                        <h3>Creators need durable authorship signals</h3>
+                        <p>People publishing original work need tools designed to keep authenticity meaningful beyond a single platform or file boundary.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>Platforms need clearer verification primitives</h3>
+                        <p>Moderation, trust, and downstream product decisions benefit from signals that survive more than ideal transfer conditions.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>Users need understandable verification</h3>
+                        <p>Authenticity systems only help if people can interpret the result without needing to decode a full research stack first.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>Honest previews still matter early</h3>
+                        <p>Roadscript is still in public preview, so this site focuses on the problem clearly without overstating what is already productized.</p>
+                    </article>
+                </div>
+                <div class="action-row">
+                    <a class="button-link is-secondary" href="solution.html">See Roadscript + Cyphra</a>
+                    <a class="button-link is-secondary" href="demo.html">Try Demo</a>
+                </div>
             </section>
         </main>
         <div id="aboutModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="aboutTitle">
@@ -472,26 +583,32 @@
             const aboutLink = document.getElementById("aboutLink");
             const aboutModal = document.getElementById("aboutModal");
             const aboutClose = document.getElementById("aboutClose");
+
             function openAboutModal() {
                 aboutModal.classList.add("is-open");
                 aboutModal.setAttribute("aria-hidden", "false");
                 aboutClose.focus();
             }
+
             function closeAboutModal() {
                 aboutModal.classList.remove("is-open");
                 aboutModal.setAttribute("aria-hidden", "true");
                 aboutLink.focus();
             }
+
             aboutLink.addEventListener("click", (event) => {
                 event.preventDefault();
                 openAboutModal();
             });
+
             aboutClose.addEventListener("click", closeAboutModal);
+
             aboutModal.addEventListener("click", (event) => {
                 if (event.target === aboutModal) {
                     closeAboutModal();
                 }
             });
+
             document.addEventListener("keydown", (event) => {
                 if (event.key === "Escape" && aboutModal.classList.contains("is-open")) {
                     closeAboutModal();
